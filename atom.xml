@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>谨言慎行</title>
-    <updated>2019-05-29T08:07:48.371Z</updated>
+    <updated>2019-06-06T04:13:59.419Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -10,6 +10,16 @@
     <logo>https://UserNameZjw.github.io/images/avatar.png</logo>
     <icon>https://UserNameZjw.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 谨言慎行</rights>
+    <entry>
+        <title type="html"><![CDATA[闲言]]></title>
+        <id>https://UserNameZjw.github.io/post/xian-yan</id>
+        <link href="https://UserNameZjw.github.io/post/xian-yan">
+        </link>
+        <updated>2019-06-06T03:44:24.000Z</updated>
+        <content type="html"><![CDATA[<p><img src="https://UserNameZjw.github.io/post-images/1559792836000.jpg" alt="">
+##个人简介</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://UserNameZjw.github.io/post/hello-gridea</id>
