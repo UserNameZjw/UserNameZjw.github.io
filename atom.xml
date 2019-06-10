@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-06T05:29:15.857Z</updated>
+    <updated>2019-06-10T11:41:40.135Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://UserNameZjw.github.io/images/avatar.png</logo>
     <icon>https://UserNameZjw.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 「谨言慎行」</rights>
+    <entry>
+        <title type="html"><![CDATA[【重学PHP】序言]]></title>
+        <id>https://UserNameZjw.github.io/post/chong-xue-php</id>
+        <link href="https://UserNameZjw.github.io/post/chong-xue-php">
+        </link>
+        <updated>2019-06-10T11:30:58.000Z</updated>
+        <summary type="html"><![CDATA[<p>这个世界，最公平的就是「你付出多少努力，生活就回报你多少收获」
+希望未来的自己，感谢现在努力的自己
+谨以此感谢</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>这个世界，最公平的就是「你付出多少努力，生活就回报你多少收获」
+希望未来的自己，感谢现在努力的自己
+谨以此感谢</p>
+<!-- more -->
+<p><img src="https://UserNameZjw.github.io/post-images/1560166674931.jpg" alt="">
+其实，做这个决定，真的是为了弥补我这几年为了这安逸的工作环境而不愿激励自己学习新知识后果，希望其他人以此为戒。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[一个中年油腻肥胖老男人的自白]]></title>
         <id>https://UserNameZjw.github.io/post/xian-yan</id>

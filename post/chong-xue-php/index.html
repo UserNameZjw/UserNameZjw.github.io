@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Talk | 「谨言慎行」</title>
+<title>【重学PHP】序言 | 「谨言慎行」</title>
 <meta name="description" content="一位年近三十的中年油腻肥胖老男人的中年危机">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -91,35 +97,51 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Talk</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://UserNameZjw.github.io/post/xian-yan">
-                  <h2 class="post-title">一个中年油腻肥胖老男人的自白</h2>
-                </a>
-                <div class="post-date">
-                  2019-06-06
-                </div>
-                <div class="post-abstract">
-                  <p>一个中年油腻肥胖老男人的自白<br>
-👏欢迎来到「谨言慎行」个人博客</p>
-
-                </div>
+          <div class="post-detail">
+            <h2 class="post-title">【重学PHP】序言</h2>
+            <div class="post-date">2019-06-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/chong-xue-php.jpg')">
               </div>
-              
-                <a class="right" href="https://UserNameZjw.github.io/post/xian-yan">
-                  <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/xian-yan.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
+            <div class="post-content">
+              <p>这个世界，最公平的就是「你付出多少努力，生活就回报你多少收获」
+希望未来的自己，感谢现在努力的自己
+谨以此感谢</p>
+<!-- more -->
+<p><img src="https://UserNameZjw.github.io/post-images/1560166674931.jpg" alt="">
+其实，做这个决定，真的是为了弥补我这几年为了这安逸的工作环境而不愿激励自己学习新知识后果，希望其他人以此为戒。</p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://UserNameZjw.github.io/tag/uFYHgUoyG" class="tag">
+                    PHP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://UserNameZjw.github.io/post/xian-yan">
+                  <h3 class="post-title">
+                    一个中年油腻肥胖老男人的自白
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -141,6 +163,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '19e99227bee7425b84fe',
+        clientSecret: 'fd6e22f86390c0075ff9db20e16c5221d27dbf9f',
+        repo: 'UserNameZjw.github.io',
+        owner: 'UserNameZjw',
+        admin: ['UserNameZjw'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
