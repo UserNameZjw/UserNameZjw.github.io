@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560230913463">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560231021812">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560230913463" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560231021812" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -176,6 +176,7 @@ PHP、Mysql、Nginx 集成环境软件：<a href="http://www.xsrvs.com/">MxSrvs 
 然而，我竟然有两次跑完代码，显示创建以及下载成功的时候，却仅仅在 web 目录下创建了一个空的 tp6 文件夹，没有任何东西，最后一次的成功，死马当作活马医，删除了一下 composer 的缓存文件，漫长的等待之后，我终于如愿以偿的看到了下图↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1560228518737.jpg" alt=""><br>
 看到上图的操作方法，以我的本地环境为例<br>
+也可以参考官网文档里的方法<br>
 先把本地环境 PHP 版本更换为合适的版本，MxSrvs 提供了 7.2.6 版本，变更后会自动重启。<br>
 <img src="https://UserNameZjw.github.io/post-images/1560229809105.png" alt=""><br>
 接下来把 Nginx 的配置文件 更改一下。<br>
@@ -183,7 +184,7 @@ PHP、Mysql、Nginx 集成环境软件：<a href="http://www.xsrvs.com/">MxSrvs 
 具体更改位置下图 ↓
 <img src="https://UserNameZjw.github.io/post-images/1560230041802.png" alt=""><br>
 在这两个地方增加上你的目录即可，然后重启一下你的 Nginx 服务器！<br>
-打开浏览器输入 127.0.0.1 或者 localhost 就可以看到TP 特有的欢迎页了<br>
+打开浏览器输入 127.0.0.1 或者 localhost 就可以看到 TP 特有的欢迎页了<br>
 TP 都是以 public 文件夹下的 index 为单一入口的，只需要把路径精确到 public 就可以了。</p>
 <p>感谢互联网的开放精神，拯救了我。<br>
 其实，具体是不是缓存的问题，还是网络的问题，我真的深究不来，既然成功了，那就当成缓存问题来处理好了。💀💀💀</p>
