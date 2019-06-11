@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-11T05:22:54.550Z</updated>
+    <updated>2019-06-11T05:28:35.294Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -47,7 +47,7 @@ PHP、Mysql、Nginx 集成环境软件：<a href="http://www.xsrvs.com/">MxSrvs 
 一款很OK的环境集成工具，简单，满足需求。<br>
 缺点：对我来说，唯一的不足就是下载实在是太慢。不过如果有梯子，可以通过谷歌云下载，速度还是OK得，我就是本方式下载</p>
 <h4 id="安装-composer">安装 composer</h4>
-<p>这里我是之前就有安装过，所以直接实用就行了。<br>
+<p>这里我是之前就有安装过，所以直接使用就行了。<br>
 可以直接对照着TP6文档一步一步操作。</p>
 <h4 id="安装tp6">安装TP6</h4>
 <p>我在这个安装过程中，耗费了将近半个小时的时间，总结了一下原因</p>
