@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Gridea | 「谨言慎行」</title>
+<title>【失误】Mac 上关于链接本地MySQL数据库的注意事项 | 「谨言慎行」</title>
 <meta name="description" content="一位年近三十的中年油腻肥胖老男人的中年危机">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -91,35 +97,61 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Gridea</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://UserNameZjw.github.io/post/hello-gridea">
-                  <h2 class="post-title">Hello Gridea</h2>
-                </a>
-                <div class="post-date">
-                  2018-12-12
-                </div>
-                <div class="post-abstract">
-                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-
-                </div>
+          <div class="post-detail">
+            <h2 class="post-title">【失误】Mac 上关于链接本地MySQL数据库的注意事项</h2>
+            <div class="post-date">2019-06-11</div>
+            
+              <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/Mac-error.jpeg')">
               </div>
-              
-                <a class="right" href="https://UserNameZjw.github.io/post/hello-gridea">
-                  <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/hello-gridea.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
+            <div class="post-content">
+              <p>以此为戒<br>
+绝不再犯<br>
+再犯...我也不能咋地自己不是  😂😂😂</p>
+<!-- more -->
+<p>仅仅就一个注意事项，除了第一次配置 Mac 环境的时候坑了我一把，终于在我没把它当回事的时候，又出来坑了我一个小时，本次，提醒自己。<br>
+重要事情说三遍</p>
+<blockquote>
+<p>Mac 链接本地数据库的时候，必须用 127.0.0.1 而不能用 localhost<br>
+Mac 链接本地数据库的时候，必须用 127.0.0.1 而不能用 localhost<br>
+Mac 链接本地数据库的时候，必须用 127.0.0.1 而不能用 localhost</p>
+</blockquote>
+<p>不然会报错...错...错！！！</p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://UserNameZjw.github.io/tag/1kL1IMeej" class="tag">
+                    Talk
+                  </a>
+                
+                  <a href="https://UserNameZjw.github.io/tag/uFYHgUoyG" class="tag">
+                    PHP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://UserNameZjw.github.io/post/thinkphp-6-1">
+                  <h3 class="post-title">
+                    「ThinkPHP 6.0」下载与安装
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -141,6 +173,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '19e99227bee7425b84fe',
+        clientSecret: 'fd6e22f86390c0075ff9db20e16c5221d27dbf9f',
+        repo: 'UserNameZjw.github.io',
+        owner: 'UserNameZjw',
+        admin: ['UserNameZjw'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
