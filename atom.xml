@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-12T01:37:48.449Z</updated>
+    <updated>2019-06-12T01:45:34.162Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -24,6 +24,7 @@
 绝不再犯<br>
 再犯...我也不能咋地自己不是  😂😂😂</p>
 <!-- more -->
+<h3 id="解决-mac-连接-mysql-本地数据库出现-2002-错误">解决 Mac 连接 MySQL 本地数据库出现 2002 错误</h3>
 <p>仅仅就一个注意事项，除了第一次配置 Mac 环境的时候坑了我一把，终于在我没把它当回事的时候，又出来坑了我一个小时，本次，提醒自己。<br>
 重要事情说三遍</p>
 <blockquote>
@@ -31,7 +32,8 @@
 Mac 链接本地数据库的时候，必须用 127.0.0.1 而不能用 localhost<br>
 Mac 链接本地数据库的时候，必须用 127.0.0.1 而不能用 localhost</p>
 </blockquote>
-<p>不然会报错...错...错！！！</p>
+<p>我指的是在 config 的连接文件中的访问 指向
+不然会报错...错...错！！！</p>
 ]]></content>
     </entry>
     <entry>
@@ -49,7 +51,7 @@ Mac 链接本地数据库的时候，必须用 127.0.0.1 而不能用 localhost<
 如有后来者，不保证经验完全可以照搬</p>
 <!-- more -->
 <p>闲话不多说，直接进入主题</p>
-<h4 id="资料及参考">资料及参考</h4>
+<h3 id="资料及参考">资料及参考</h3>
 <p>官方文档：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037479">TP6官方文档「预览版」</a><br>
 本文主要参考官方文档<br>
 第一章[安装]：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037481">第一章链接</a><br>
@@ -60,9 +62,9 @@ composer 中国镜像官网：<a href="https://www.phpcomposer.com/">composer �
 <p>为什么需要中国镜像官网，是因为「中国国情」导致无法访问到国外站点，除非借助梯子<br>
 其实TP6的文档非常详细了，包括关于 composer 的安装、替换镜像源、下载软件都有详细步骤讲解。</p>
 </blockquote>
-<h4 id="实际上手">实际上手</h4>
+<h3 id="实际上手">实际上手</h3>
 <p>虽然官方的说明非常详细，但也根据每个人的电脑环境，以及系统版本等不同因素而受到不同的影响，以下记录本人的上手情况</p>
-<h4 id="上手环境">上手环境!</h4>
+<h3 id="上手环境">上手环境!</h3>
 <p>电脑配置图↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1560225219378.png" alt="电脑环境"><br>
 PHP、Mysql、Nginx 集成环境软件：<a href="http://www.xsrvs.com/">MxSrvs 官网</a><br>
@@ -70,10 +72,10 @@ PHP、Mysql、Nginx 集成环境软件：<a href="http://www.xsrvs.com/">MxSrvs 
 <img src="https://UserNameZjw.github.io/post-images/1560225646600.png" alt=""><br>
 一款很OK的环境集成工具，简单，满足需求。<br>
 缺点：对我来说，唯一的不足就是下载实在是太慢。不过如果有梯子，可以通过谷歌云下载，速度还是OK得，我就是本方式下载</p>
-<h4 id="安装-composer">安装 composer</h4>
+<h3 id="安装-composer">安装 composer</h3>
 <p>这里我是之前就有安装过，所以直接使用就行了。<br>
 可以直接对照着TP6文档一步一步操作。</p>
-<h4 id="安装tp6">安装TP6</h4>
+<h3 id="安装tp6">安装TP6</h3>
 <p>我在这个安装过程中，耗费了将近半个小时的时间，总结了一下原因</p>
 <ol>
 <li>镜像源替换失败</li>
