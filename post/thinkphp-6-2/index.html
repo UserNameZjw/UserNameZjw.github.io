@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>「ThinkPHP 6.0」配置与控制器 | 「谨言慎行」</title>
+<meta name="description" content="一位年近三十的中年油腻肥胖老男人的中年危机">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560519966166">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://UserNameZjw.github.io">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560519966166" class="site-logo">
+        <h1 class="site-title">「谨言慎行」</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      一位年近三十的中年油腻肥胖老男人的中年危机
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://UserNameZjw.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">「ThinkPHP 6.0」配置与控制器</h2>
+            <div class="post-date">2019-06-14</div>
+            
+              <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/thinkphp-6-2.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>重点：<br>
+ThinkPHP 6.0 配置<br>
+ThinkPHP 6.0 控制器</p>
+<!-- more -->
+<blockquote>
+<p>如果是 Nginx 服务器，并且版本不是太高，你需要看一下官方文档中的 Nginx 的路由转向配置，避免一下不必要的坑</p>
+</blockquote>
+<p>官网参考链接：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037488">TP6 URL访问</a><br>
+找到 「Nginx」部分 图↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560508162806.png" alt=""></p>
+<pre><code>location / { // …..省略部分代码
+   if (!-e $request_filename) {
+   		rewrite  ^(.*)$  /index.php?s=/$1  last;
+    }
+}
+</code></pre>
+<p>如果你用的是跟我一样的 MxSrvs 软件，配置如下↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560508384596.png" alt=""><br>
+然后重启 Nginx 服务器即可。</p>
+<h3 id="变化">变化</h3>
+<p>1.根目录文件名变化</p>
+<blockquote>
+<p>ThinkPHP 5 版本(图左)是 application 文件夹，ThinkPHP 6 版本(图右)直接命名就是 app 文件夹。
+<img src="https://UserNameZjw.github.io/post-images/1560509598577.png" alt=""></p>
+</blockquote>
+<p>2.默认用模式</p>
+<blockquote>
+<p>ThinkPHP 6 默认是单应用模式，TP5 版本默认是多应用模式。<br>
+TP6 的多应用模式需要手动开启支持。
+开启方法修改 config/app.php 配置文件中配置为  'auto_multi_app'   =&gt; true 即可。<br>
+单例模式中，在控制器命名中，可以省略掉应用名 index 应用举例。<br>
+命名空间<br>
+TP5 写法  <strong>namespace app\index\controller;</strong><br>
+TP6 写法  <strong>namespace app\controller;</strong><br>
+文件位置<br>
+TP5 文件位置 <strong>application/index/controller/Index.php</strong><br>
+TP6 文件位置 <strong>app/controller/Index.php</strong><br>
+多应用开启后，就需要跟TP5一样的写法</p>
+</blockquote>
+<p>注意：如果开启多应用模式，需要删除掉框架默认自带的 controller 文件夹，不然会依然每次访问，都默认到 controller 。</p>
+<p>3.控制器命名规范变化<br>
+TP 5 中需要控制器文件名必须采用驼峰命名（首字母大写: Index）。<br>
+TP6 中兼容了普通写法，文件名完全小写: index ，只需要你的类名跟文件名保持一致即可</p>
+<blockquote>
+<p>假设 文件名为 index.php ，那么类的写法为 class index{ } 。</p>
+</blockquote>
+<p>4.支持控制器大驼峰命名  (两者都默认支持)</p>
+<blockquote>
+<p>举例：<br>
+控制器文件名为 HelloWorld.php ，类名保持一致为 class HelloWorld { }<br>
+文件路径 app\index\controller\HelloWorld.php<br>
+访问地址 http://localhost/index.php/hello_world<br>
+现支持 http://localhost/index.php/HelloWorld  访问
+此功能默认开启，如果想关闭，需要修改 route.php 配置文件中配置为 url_convert'   =&gt; false  即可。</p>
+</blockquote>
+<p>5.控制器文件名默认省略 controller  后缀</p>
+<blockquote>
+<p>默认控制器文件名格式 Index.php，开启后，需要把控制器文件名格式变更为 IndexController.php<br>
+开启方法，修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
+</blockquote>
+<p>6.错误信息
+TP6 中没有开发模式，只需要修改 config/app.php 配置文件中配置为 'show_error_msg'   =&gt; true 即可显示错误信息，默认关闭。</p>
+<h3 id="配置总结">配置总结</h3>
+<p>1.开启多应用模式</p>
+<blockquote>
+<p>修改 config/app.php 配置文件中配置为  'auto_multi_app'   =&gt; true</p>
+</blockquote>
+<p>2.关闭控制器大驼峰命名访问支持</p>
+<blockquote>
+<p>修改 route.php 配置文件中配置为 url_convert'   =&gt; false</p>
+</blockquote>
+<p>3.开启错误信息</p>
+<blockquote>
+<p>修改 config/app.php 配置文件中配置为 'show_error_msg'   =&gt; true</p>
+</blockquote>
+<p>4.开启控制器严格模式，即文件名不省略 Controller</p>
+<blockquote>
+<p>修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
+</blockquote>
+<h3 id="控制器">控制器</h3>
+<p>1.经典型控制器(多应用模式)</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+class Index
+{
+    public function index()
+    {
+        return 'index';
+    }
+}
+</code></pre>
+<p>文件位置：app\index\controller\Index.php<br>
+访问URL：http://localhost/index.php/index</p>
+<p>2.多级控制器(理论支持无限级)</p>
+<pre><code>&lt;?php
+namespace app\index\controller\user;
+
+class  Blog 
+{
+    public function index()
+    {
+        return 'index';
+    }
+    
+}
+</code></pre>
+<p>文件位置：app/index/controller/user/Blog.php<br>
+访问URL：http://localhost/index.php/user.blog/index<br>
+注意事项如下↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560519428516.png" alt=""></p>
+<h3 id="路由">路由</h3>
+<p>多级控制器官方推荐访问方法为 自定义配置路由<br>
+下节再聊🤣🤣🤣</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://UserNameZjw.github.io/tag/js73X3rii" class="tag">
+                    ThinkPHP
+                  </a>
+                
+                  <a href="https://UserNameZjw.github.io/tag/ot5L6E5ha" class="tag">
+                    ThinkPHP 6.0
+                  </a>
+                
+                  <a href="https://UserNameZjw.github.io/tag/uFYHgUoyG" class="tag">
+                    PHP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://UserNameZjw.github.io/post/Mac-error">
+                  <h3 class="post-title">
+                    【失误】Mac 上关于链接本地MySQL数据库的报错2002
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '19e99227bee7425b84fe',
+        clientSecret: 'fd6e22f86390c0075ff9db20e16c5221d27dbf9f',
+        repo: 'UserNameZjw.github.io',
+        owner: 'UserNameZjw',
+        admin: ['UserNameZjw'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-12T01:45:41.313Z</updated>
+    <updated>2019-06-14T13:46:17.082Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -10,6 +10,132 @@
     <logo>https://UserNameZjw.github.io/images/avatar.png</logo>
     <icon>https://UserNameZjw.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 「谨言慎行」</rights>
+    <entry>
+        <title type="html"><![CDATA[「ThinkPHP 6.0」配置与控制器]]></title>
+        <id>https://UserNameZjw.github.io/post/thinkphp-6-2</id>
+        <link href="https://UserNameZjw.github.io/post/thinkphp-6-2">
+        </link>
+        <updated>2019-06-14T04:36:21.000Z</updated>
+        <summary type="html"><![CDATA[<p>重点：<br>
+ThinkPHP 6.0 配置<br>
+ThinkPHP 6.0 控制器</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>重点：<br>
+ThinkPHP 6.0 配置<br>
+ThinkPHP 6.0 控制器</p>
+<!-- more -->
+<blockquote>
+<p>如果是 Nginx 服务器，并且版本不是太高，你需要看一下官方文档中的 Nginx 的路由转向配置，避免一下不必要的坑</p>
+</blockquote>
+<p>官网参考链接：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037488">TP6 URL访问</a><br>
+找到 「Nginx」部分 图↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560508162806.png" alt=""></p>
+<pre><code>location / { // …..省略部分代码
+   if (!-e $request_filename) {
+   		rewrite  ^(.*)$  /index.php?s=/$1  last;
+    }
+}
+</code></pre>
+<p>如果你用的是跟我一样的 MxSrvs 软件，配置如下↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560508384596.png" alt=""><br>
+然后重启 Nginx 服务器即可。</p>
+<h3 id="变化">变化</h3>
+<p>1.根目录文件名变化</p>
+<blockquote>
+<p>ThinkPHP 5 版本(图左)是 application 文件夹，ThinkPHP 6 版本(图右)直接命名就是 app 文件夹。
+<img src="https://UserNameZjw.github.io/post-images/1560509598577.png" alt=""></p>
+</blockquote>
+<p>2.默认用模式</p>
+<blockquote>
+<p>ThinkPHP 6 默认是单应用模式，TP5 版本默认是多应用模式。<br>
+TP6 的多应用模式需要手动开启支持。
+开启方法修改 config/app.php 配置文件中配置为  'auto_multi_app'   =&gt; true 即可。<br>
+单例模式中，在控制器命名中，可以省略掉应用名 index 应用举例。<br>
+命名空间<br>
+TP5 写法  <strong>namespace app\index\controller;</strong><br>
+TP6 写法  <strong>namespace app\controller;</strong><br>
+文件位置<br>
+TP5 文件位置 <strong>application/index/controller/Index.php</strong><br>
+TP6 文件位置 <strong>app/controller/Index.php</strong><br>
+多应用开启后，就需要跟TP5一样的写法</p>
+</blockquote>
+<p>注意：如果开启多应用模式，需要删除掉框架默认自带的 controller 文件夹，不然会依然每次访问，都默认到 controller 。</p>
+<p>3.控制器命名规范变化<br>
+TP 5 中需要控制器文件名必须采用驼峰命名（首字母大写: Index）。<br>
+TP6 中兼容了普通写法，文件名完全小写: index ，只需要你的类名跟文件名保持一致即可</p>
+<blockquote>
+<p>假设 文件名为 index.php ，那么类的写法为 class index{ } 。</p>
+</blockquote>
+<p>4.支持控制器大驼峰命名  (两者都默认支持)</p>
+<blockquote>
+<p>举例：<br>
+控制器文件名为 HelloWorld.php ，类名保持一致为 class HelloWorld { }<br>
+文件路径 app\index\controller\HelloWorld.php<br>
+访问地址 http://localhost/index.php/hello_world<br>
+现支持 http://localhost/index.php/HelloWorld  访问
+此功能默认开启，如果想关闭，需要修改 route.php 配置文件中配置为 url_convert'   =&gt; false  即可。</p>
+</blockquote>
+<p>5.控制器文件名默认省略 controller  后缀</p>
+<blockquote>
+<p>默认控制器文件名格式 Index.php，开启后，需要把控制器文件名格式变更为 IndexController.php<br>
+开启方法，修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
+</blockquote>
+<p>6.错误信息
+TP6 中没有开发模式，只需要修改 config/app.php 配置文件中配置为 'show_error_msg'   =&gt; true 即可显示错误信息，默认关闭。</p>
+<h3 id="配置总结">配置总结</h3>
+<p>1.开启多应用模式</p>
+<blockquote>
+<p>修改 config/app.php 配置文件中配置为  'auto_multi_app'   =&gt; true</p>
+</blockquote>
+<p>2.关闭控制器大驼峰命名访问支持</p>
+<blockquote>
+<p>修改 route.php 配置文件中配置为 url_convert'   =&gt; false</p>
+</blockquote>
+<p>3.开启错误信息</p>
+<blockquote>
+<p>修改 config/app.php 配置文件中配置为 'show_error_msg'   =&gt; true</p>
+</blockquote>
+<p>4.开启控制器严格模式，即文件名不省略 Controller</p>
+<blockquote>
+<p>修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
+</blockquote>
+<h3 id="控制器">控制器</h3>
+<p>1.经典型控制器(多应用模式)</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+class Index
+{
+    public function index()
+    {
+        return 'index';
+    }
+}
+</code></pre>
+<p>文件位置：app\index\controller\Index.php<br>
+访问URL：http://localhost/index.php/index</p>
+<p>2.多级控制器(理论支持无限级)</p>
+<pre><code>&lt;?php
+namespace app\index\controller\user;
+
+class  Blog 
+{
+    public function index()
+    {
+        return 'index';
+    }
+    
+}
+</code></pre>
+<p>文件位置：app/index/controller/user/Blog.php<br>
+访问URL：http://localhost/index.php/user.blog/index<br>
+注意事项如下↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560519428516.png" alt=""></p>
+<h3 id="路由">路由</h3>
+<p>多级控制器官方推荐访问方法为 自定义配置路由<br>
+下节再聊🤣🤣🤣</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[【失误】Mac 上关于链接本地MySQL数据库的报错2002]]></title>
         <id>https://UserNameZjw.github.io/post/Mac-error</id>
@@ -147,6 +273,13 @@ TP 都是以 public 文件夹下的 index 为单一入口的，只需要把路�
 <!-- more -->
 <p>本篇写在即在一个小时后迎来第一次直播课的前夕，花费7880，报名参与一个PhpEr进阶班。这应该是除了大学，我所为学习花费最大的一笔单项支出，希望我能有更多的收获，或者说，有让自己满意的收获。<br>
 其实，做这个决定，真的是为了弥补我这几年为了这安逸的工作环境而不愿激励自己学习新知识后果，希望其他人以此为戒。</p>
+<h3 id="背景">背景</h3>
+<ol>
+<li>图安逸，不思进取</li>
+<li>发现与社会必须技能脱节</li>
+<li>真真的被生活压力所迫</li>
+<li>不想让未来的自己鄙视现在的自己</li>
+</ol>
 ]]></content>
     </entry>
     <entry>
