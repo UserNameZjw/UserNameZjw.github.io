@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560522328021">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560524398985">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560522328021" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560524398985" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -185,6 +185,44 @@ TP6 中没有开发模式<br>
 <blockquote>
 <p>修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
 </blockquote>
+<h3 id="配置操作">配置操作</h3>
+<p>官方文档：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037484">ThinkPHP 6 官方配置</a><br>
+1.配置获取<br>
+操作配置，需要引入 Config 类文件</p>
+<pre><code>use think\facade\Config;
+</code></pre>
+<p>2.读取配置  Config::get()</p>
+<p>读取一级配置所有参数</p>
+<pre><code>Config::get('app');
+Config::get('route');
+</code></pre>
+<p>读取单个配置</p>
+<pre><code>Config::get('app.app_name');
+Config::get('route.url_domain_root');
+</code></pre>
+<p>读取数组配置</p>
+<pre><code>Config::get('database.default.host');
+</code></pre>
+<p>3.判断是否存在某个配置  Config::has()</p>
+<pre><code>Config::has('template');
+Config::has('route.route_rule_merge');
+</code></pre>
+<p>4.修改配置  Config::set()<br>
+不在支持单个配置更新，需要数组批量更新配置</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+use think\facade\Config;
+class Index
+{
+    public function index()
+    {
+        //原为true 
+        Config::set([&quot;show_error_msg&quot; =&gt; false],'app');
+        $a = Config::get(&quot;app&quot;);
+        var_dump($a);
+    }
+}
+</code></pre>
 <h3 id="控制器">控制器</h3>
 <p>1.经典型控制器(多应用模式)</p>
 <pre><code>&lt;?php

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-14T14:25:40.986Z</updated>
+    <updated>2019-06-14T15:00:37.385Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -99,6 +99,44 @@ TP6 中没有开发模式<br>
 <blockquote>
 <p>修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
 </blockquote>
+<h3 id="配置操作">配置操作</h3>
+<p>官方文档：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037484">ThinkPHP 6 官方配置</a><br>
+1.配置获取<br>
+操作配置，需要引入 Config 类文件</p>
+<pre><code>use think\facade\Config;
+</code></pre>
+<p>2.读取配置  Config::get()</p>
+<p>读取一级配置所有参数</p>
+<pre><code>Config::get('app');
+Config::get('route');
+</code></pre>
+<p>读取单个配置</p>
+<pre><code>Config::get('app.app_name');
+Config::get('route.url_domain_root');
+</code></pre>
+<p>读取数组配置</p>
+<pre><code>Config::get('database.default.host');
+</code></pre>
+<p>3.判断是否存在某个配置  Config::has()</p>
+<pre><code>Config::has('template');
+Config::has('route.route_rule_merge');
+</code></pre>
+<p>4.修改配置  Config::set()<br>
+不在支持单个配置更新，需要数组批量更新配置</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+use think\facade\Config;
+class Index
+{
+    public function index()
+    {
+        //原为true 
+        Config::set([&quot;show_error_msg&quot; =&gt; false],'app');
+        $a = Config::get(&quot;app&quot;);
+        var_dump($a);
+    }
+}
+</code></pre>
 <h3 id="控制器">控制器</h3>
 <p>1.经典型控制器(多应用模式)</p>
 <pre><code>&lt;?php
