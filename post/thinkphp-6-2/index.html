@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560520688136">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560522328021">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560520688136" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560522328021" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -217,6 +217,55 @@ class  Blog
 访问URL：http://localhost/index.php/user.blog/index<br>
 注意事项如下↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1560519428516.png" alt=""></p>
+<p>3.空控制器<br>
+空控制器的使用场景是，当访问到一个不存在的方法时自动调用，可以作为当前控制下的404错误URL优化使用。</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+class Index
+{
+    public function __call($method, $args)
+    {
+        return '调用当前空控制器方法！';
+    }
+
+    public function index()
+    {
+        return 'index';
+    }
+}
+</code></pre>
+<p>当我访问不存在的 hello 方法时↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560522078557.png" alt=""></p>
+<h3 id="渲染输出">渲染输出</h3>
+<p>控制器一般不需要任何输出，直接 return 即可<br>
+不要在控制器中使用 die、exit 等类似的中断代码，需要调试，可以使用内置 halt 助手函数。<br>
+部分系统有效输出↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+class Index 
+{
+    public function hello()
+    {
+    	// 输出hello,world!
+        return 'hello,world!';
+    }
+    
+    public function json()
+    {
+    	// 输出JSON
+        return json($data);
+    }
+    
+    public function read()
+    {
+    	// 渲染默认模板输出
+        return view();
+    }
+
+}
+</code></pre>
 <h3 id="路由">路由</h3>
 <p>多级控制器官方推荐访问方法为 自定义配置路由<br>
 下节再聊🤣🤣🤣</p>
