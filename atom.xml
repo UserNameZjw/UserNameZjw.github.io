@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-14T13:50:12.915Z</updated>
+    <updated>2019-06-14T13:52:39.296Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -50,10 +50,10 @@ ThinkPHP 6.0 控制器</p>
 <p>ThinkPHP 6 默认是单应用模式，TP5 版本默认是多应用模式。<br>
 TP6 的多应用模式需要手动开启支持。<br>
 开启方法修改 config/app.php 配置文件中配置为  'auto_multi_app'   =&gt; true 即可。<br>
-单例模式中，在控制器命名中，可以省略掉应用名 index 应用举例。<br>
+单例模式中，在控制器空间命名中，可以省略掉应用名 index （举例）。<br>
 命名空间<br>
 TP5 写法  <strong>namespace app\index\controller;</strong><br>
-TP6 写法  <strong>namespace app\controller;</strong><br>
+TP6 写法  <strong>namespace app\controller;</strong>   (单应用模式)<br>
 文件位置<br>
 TP5 文件位置 <strong>application/index/controller/Index.php</strong><br>
 TP6 文件位置 <strong>app/controller/Index.php</strong><br>
