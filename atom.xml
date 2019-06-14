@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-14T15:02:21.356Z</updated>
+    <updated>2019-06-14T15:34:21.407Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -169,7 +169,37 @@ class  Blog
 访问URL：http://localhost/index.php/user.blog/index<br>
 注意事项如下↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1560519428516.png" alt=""></p>
-<p>3.空控制器<br>
+<p>3.引用其他模块类 需要 use 命名空间</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+use think\facade\Config;
+use app\index\controller\user\Blog;
+
+class Index
+{
+    public function index()
+    {
+        $bolg = new Blog();
+        return $bolg -&gt;index();
+        // return request()-&gt;controller();
+    }
+}
+</code></pre>
+<p>4.控制类继承 extends</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+use think\facade\Config;
+
+class Index extends Config
+{
+    public function index()
+    {
+        var_dump(Config::get('app'));
+        // return request()-&gt;controller();
+    }
+}
+</code></pre>
+<p>5.空控制器<br>
 空控制器的使用场景是，当访问到一个不存在的方法时自动调用，可以作为当前控制下的404错误URL优化使用。</p>
 <pre><code>&lt;?php
 namespace app\index\controller;

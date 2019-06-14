@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560524398985">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560525985179">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560524398985" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560525985179" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -255,7 +255,37 @@ class  Blog
 访问URL：http://localhost/index.php/user.blog/index<br>
 注意事项如下↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1560519428516.png" alt=""></p>
-<p>3.空控制器<br>
+<p>3.引用其他模块类 需要 use 命名空间</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+use think\facade\Config;
+use app\index\controller\user\Blog;
+
+class Index
+{
+    public function index()
+    {
+        $bolg = new Blog();
+        return $bolg -&gt;index();
+        // return request()-&gt;controller();
+    }
+}
+</code></pre>
+<p>4.控制类继承 extends</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+use think\facade\Config;
+
+class Index extends Config
+{
+    public function index()
+    {
+        var_dump(Config::get('app'));
+        // return request()-&gt;controller();
+    }
+}
+</code></pre>
+<p>5.空控制器<br>
 空控制器的使用场景是，当访问到一个不存在的方法时自动调用，可以作为当前控制下的404错误URL优化使用。</p>
 <pre><code>&lt;?php
 namespace app\index\controller;
