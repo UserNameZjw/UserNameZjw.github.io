@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-14T15:34:21.407Z</updated>
+    <updated>2019-06-14T15:41:00.648Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -75,7 +75,8 @@ TP6 中兼容了普通写法，文件名完全小写: index ，只需要你的�
 </blockquote>
 <p>5.控制器文件名默认省略 controller  后缀</p>
 <blockquote>
-<p>默认控制器文件名格式 Index.php，开启后，需要把控制器文件名格式变更为 IndexController.php<br>
+<p>TP3.x 版本，就是不省略 controller 后缀，开启可以用作兼容低版本文件来用。<br>
+默认控制器文件名格式 Index.php，开启后，需要把控制器文件名格式变更为 IndexController.php<br>
 开启方法，修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
 </blockquote>
 <p>6.错误信息
@@ -185,7 +186,9 @@ class Index
     }
 }
 </code></pre>
-<p>4.控制类继承 extends</p>
+<p>4.控制类继承 extends<br>
+use 一下需要继承的类文件<br>
+然后直接继承便可以调用类方法</p>
 <pre><code>&lt;?php
 namespace app\index\controller;
 use think\facade\Config;
