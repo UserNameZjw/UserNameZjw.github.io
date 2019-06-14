@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-14T13:53:44.689Z</updated>
+    <updated>2019-06-14T13:58:09.341Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -16,12 +16,10 @@
         <link href="https://UserNameZjw.github.io/post/thinkphp-6-2">
         </link>
         <updated>2019-06-14T04:36:21.000Z</updated>
-        <summary type="html"><![CDATA[<p>重点：<br>
-ThinkPHP 6.0 部分配置<br>
+        <summary type="html"><![CDATA[<p>ThinkPHP 6.0 部分配置<br>
 ThinkPHP 6.0 控制器</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>重点：<br>
-ThinkPHP 6.0 部分配置<br>
+        <content type="html"><![CDATA[<p>ThinkPHP 6.0 部分配置<br>
 ThinkPHP 6.0 控制器</p>
 <!-- more -->
 <blockquote>
