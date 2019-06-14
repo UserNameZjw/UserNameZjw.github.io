@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-14T13:52:39.296Z</updated>
+    <updated>2019-06-14T13:53:25.279Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -81,7 +81,8 @@ TP6 中兼容了普通写法，文件名完全小写: index ，只需要你的�
 开启方法，修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
 </blockquote>
 <p>6.错误信息
-TP6 中没有开发模式，只需要修改 config/app.php 配置文件中配置为 'show_error_msg'   =&gt; true 即可显示错误信息，默认关闭。</p>
+TP6 中没有开发模式<br>
+只需要修改 config/app.php 配置文件中配置为 'show_error_msg'   =&gt; true 即可显示错误信息，默认关闭。</p>
 <h3 id="配置小结">配置小结</h3>
 <p>本小结仅限本文出现，当然还有其他好的配置。<br>
 1.开启多应用模式</p>
