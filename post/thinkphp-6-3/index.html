@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>「ThinkPHP 6.0」控制器验证与响应 | 「谨言慎行」</title>
+<meta name="description" content="一位年近三十的中年油腻肥胖老男人的中年危机">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560695912260">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://UserNameZjw.github.io">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560695912260" class="site-logo">
+        <h1 class="site-title">「谨言慎行」</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      一位年近三十的中年油腻肥胖老男人的中年危机
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://UserNameZjw.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">「ThinkPHP 6.0」控制器验证与响应</h2>
+            <div class="post-date">2019-06-16</div>
+            
+              <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/thinkphp-6-3.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>控制器验证<br>
+响应</p>
+<!-- more -->
+<h3 id="controller-基类继承引用">Controller 基类继承引用</h3>
+<p>通过继承 BaseController 基类，注入 app 以及 request<br>
+本文仅举两个浅显的调用例子<br>
+1.获取当前操作名  $action = $this-&gt;request-&gt;action();<br>
+2.获取当前应用基础目录  $path = $this-&gt;app-&gt;getBasePath();<br>
+<img src="https://UserNameZjw.github.io/post-images/1560679805511.png" alt=""><br>
+简易代码 ↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //获取当前操作名
+        echo $action = $this-&gt;request-&gt;action();
+        echo '&lt;br&gt;获取当前操作名代码 ：$action = $this-&gt;request-&gt;action();&lt;br&gt; ';
+        // 获取当前应用基础目录
+        echo $path = $this-&gt;app-&gt;getBasePath();
+        echo '&lt;br&gt;获取当前应用基础目录 ：$path = $this-&gt;app-&gt;getBasePath();&lt;br&gt; ';
+        echo &quot;以上两个调用 request app 均通过基类 BaseController.php 注入&lt;br&gt;&quot;;
+        echo &quot;只需继承 BaseController 类即可调用&quot;;
+    }
+}
+</code></pre>
+<p>注意：<br>
+如果你是多应用模式，可以在 应用目录下同样创建一个 BaseController.php 基类文件<br>
+ThinkPHP 6 在寻址的时候，优先就近原则。</p>
+<h3 id="控制器验证">控制器验证</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037629">TP6 官方内置规则</a><br>
+1.通过引用 validate 函数直接在控制器中使用<br>
+这个简单，就不做过多介绍</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+class Validate
+{ 
+    public function index ()
+    {
+        //定义验证规则
+        $rule = [
+            'name' =&gt; &quot;require|max:10&quot;,
+            'email' =&gt; &quot;email&quot;
+        ];
+
+        // 定义错误返回信息
+
+        $message = [
+            &quot;name&quot; =&gt; [&quot;require&quot; =&gt; '名称不能为空','max' =&gt; '名称最大长度为10'],
+            'email' =&gt; '邮箱格式错误'
+        ];
+
+        // 定义模拟数据
+        $data = [
+            'name' =&gt; 'Cry',
+            'email' =&gt; 'snail@qq.com'
+        ];
+
+        // 验证规则
+        // Validate(规则,返回提示)-&gt;check(数据)
+        $result = Validate($rule,$message)-&gt;check($data);
+
+        if(!$result){
+            // 获取报错数据
+            return Validate()-&gt;getError();
+        }else{
+            return '验证通过';
+        }
+    }
+}
+</code></pre>
+<p>2.通过引用 validate 对象直接在控制器中使用<br>
+继承基类 BaseController 类</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+
+class Validate extends BaseController
+{ 
+    public function index ()
+    {
+        //定义验证规则
+        $rule = [
+            'name' =&gt; &quot;require|max:10&quot;,
+            'email' =&gt; &quot;email&quot;
+        ];
+
+        // 定义错误返回信息
+
+        $message = [
+            &quot;name&quot; =&gt; [&quot;require&quot; =&gt; '名称不能为空','max' =&gt; '名称最大长度为10'],
+            'email' =&gt; '邮箱格式错误'
+        ];
+
+        // 定义模拟数据
+        $data = [
+            'name' =&gt; 'Cry',
+            'email' =&gt; 'snail@qq.com'
+        ];
+
+        // 验证规则
+        $result = $this-&gt;validate($data,$rule,$message);
+
+        if(!$result){
+            // 获取报错数据
+            return Validate()-&gt;getError();
+        }else{
+            return '验证通过';
+        }
+    }
+}
+</code></pre>
+<p>3.自定义验证规则<br>
+验证下图要求(均使用 ThinkPHP6 内置规则)<br>
+<img src="https://UserNameZjw.github.io/post-images/1560694503550.png" alt=""><br>
+1.需要额外创建一个验证文件</p>
+<blockquote>
+<p>在 app 目录下创建 validate 文件夹，然后创建 User.php 文件作为自定义规则文件。</p>
+</blockquote>
+<p>目录：app\validate\User .php 代码如下 ↓</p>
+<pre><code>&lt;?php
+namespace app\validate;
+
+use think\Validate;
+
+class User extends Validate
+{
+    protected $rule = [
+        'user_name' =&gt; 'require|chsAlphaNum|length:6,10',
+        'password' =&gt; 'require|alphaNum|length:6,10',
+        'email' =&gt; 'email',
+        'mobile' =&gt; 'require|mobile|number|length:11'
+    ];
+
+    protected $message = [
+        'user_name' =&gt; ['require' =&gt; '用户名不能为空','chsAlphaNum' =&gt; '用户名必须为字母和数字或汉字','length' =&gt; '用户名长度应在6至10位'],
+        'password' =&gt; ['require' =&gt; '密码不能为空','alphaNum' =&gt; '密码必须为数字和字母组合','length' =&gt; '密码长度应在6至10位'],
+        'email' =&gt; ['email' =&gt; '邮箱格式有误'],
+        'mobile' =&gt; ['require' =&gt; '手机不能为空','number' =&gt; '手机号必须为数字','length' =&gt; '手机号长度必须11位','mobile' =&gt; '不是可用手机号']
+    ];
+}
+</code></pre>
+<p>2.在 app\index\controller\Index.php 下调用<br>
+引入 User.php ，具体代码如下 ↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use app\validate\User;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $data = [
+            'user_name' =&gt; 'Cry666超帅的',
+            'password' =&gt; '123456qwe',
+            'email' =&gt; 'snail@qq.com',
+            'mobile' =&gt; '13112121211'
+        ];
+
+        $result = Validate(User::class)-&gt;check($data);
+
+        if(!$result){
+            // 获取报错数据
+            return Validate()-&gt;getError();
+        }else{
+            return '验证通过';
+        }
+    }
+}
+</code></pre>
+<h3 id="响应">响应</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037526">TP6 官方响应输出</a><br>
+除了路由，需要注意的可能就是重定向了<br>
+1.重定向<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037528">TP6 官方重定向</a><br>
+上一个官方例子代码↓</p>
+<pre><code>&lt;?php
+namespace app\controller;
+
+class Index
+{
+    public function hello()
+    {
+        return redirect('http://www.thinkphp.cn');
+    }
+}
+</code></pre>
+<p>其他使用模式，比如传值、回溯到原网页等操作，请自行看文档学习🤣🤣🤣</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://UserNameZjw.github.io/post/thinkphp-6-2">
+                  <h3 class="post-title">
+                    「ThinkPHP 6.0」部分配置与控制器
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '19e99227bee7425b84fe',
+        clientSecret: 'fd6e22f86390c0075ff9db20e16c5221d27dbf9f',
+        repo: 'UserNameZjw.github.io',
+        owner: 'UserNameZjw',
+        admin: ['UserNameZjw'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
