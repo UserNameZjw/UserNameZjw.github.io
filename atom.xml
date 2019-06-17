@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-16T14:47:32.288Z</updated>
+    <updated>2019-06-17T14:42:44.688Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -290,8 +290,14 @@ TP6 中兼容了普通写法，文件名完全小写: index ，只需要你的�
 开启方法，修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
 </blockquote>
 <p>6.错误信息
-TP6 中没有开发模式<br>
+TP6 中默认没有开启调试模式<br>
 只需要修改 config/app.php 配置文件中配置为 'show_error_msg'   =&gt; true 即可显示错误信息，默认关闭。</p>
+<p>7.开启开发模式<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037618">TP6 官方调试模式</a><br>
+<img src="https://UserNameZjw.github.io/post-images/1560782224176.png" alt=""><br>
+注意：是文件名 .example..env 把 .env 之前的全部删掉，仅仅保留 .env 。<br>
+然后报错图如下↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560782376130.png" alt=""></p>
 <h3 id="配置小结">配置小结</h3>
 <p>本小结仅限本文出现，当然还有其他好的配置。<br>
 1.开启多应用模式</p>
@@ -309,6 +315,10 @@ TP6 中没有开发模式<br>
 <p>4.开启控制器严格模式，即文件名不省略 Controller</p>
 <blockquote>
 <p>修改 route.php 配置文件中配置为 'controller_suffix'     =&gt; true</p>
+</blockquote>
+<p>5.开启调试模式</p>
+<blockquote>
+<p>只需要把根目录下 .example..env 文件更名为 <strong>.env</strong> 即可。</p>
 </blockquote>
 <h3 id="配置操作">配置操作</h3>
 <p>官方文档：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037484">ThinkPHP 6 官方配置</a><br>
