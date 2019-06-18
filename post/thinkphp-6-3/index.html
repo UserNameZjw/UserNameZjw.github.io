@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560782888343">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560840658341">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560782888343" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560840658341" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -232,7 +232,9 @@ class Validate extends BaseController
 <blockquote>
 <p>在 app 目录下创建 validate 文件夹，然后创建 User.php 文件作为自定义规则文件。</p>
 </blockquote>
-<p>目录：app\validate\User .php 代码如下 ↓</p>
+<p>目录：app\validate\User .php 代码如下 ↓<br>
+注意代码格式，不需要创建方法，直接写验证规则和验证返回即可<br>
+用 protected 声明</p>
 <pre><code>&lt;?php
 namespace app\validate;
 

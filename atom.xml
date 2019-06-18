@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-17T14:49:24.803Z</updated>
+    <updated>2019-06-18T06:51:06.300Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -146,7 +146,9 @@ class Validate extends BaseController
 <blockquote>
 <p>在 app 目录下创建 validate 文件夹，然后创建 User.php 文件作为自定义规则文件。</p>
 </blockquote>
-<p>目录：app\validate\User .php 代码如下 ↓</p>
+<p>目录：app\validate\User .php 代码如下 ↓<br>
+注意代码格式，不需要创建方法，直接写验证规则和验证返回即可<br>
+用 protected 声明</p>
 <pre><code>&lt;?php
 namespace app\validate;
 
