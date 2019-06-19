@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-19T08:49:08.847Z</updated>
+    <updated>2019-06-19T08:58:19.606Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -330,8 +330,10 @@ return [
 <p>具体结果图 ↓<br>
 图一：<img src="https://UserNameZjw.github.io/post-images/1560933916857.png" alt=""><br>
 图二：<img src="https://UserNameZjw.github.io/post-images/1560933935189.png" alt=""><br>
-图三：<img src="https://UserNameZjw.github.io/post-images/1560933943252.png" alt=""><br>
-需要注意的是图三所描述的场景，刷新重定向 目标页，会丢的不仅仅数据，还有回家的路。</p>
+图三：<img src="https://UserNameZjw.github.io/post-images/1560933943252.png" alt=""></p>
+<blockquote>
+<p>注意：图三所描述的场景，刷新重定向「目标页」，会丢的不仅仅数据，还有回家的路。</p>
+</blockquote>
 ]]></content>
     </entry>
     <entry>
