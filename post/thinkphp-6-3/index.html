@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560840658341">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1560934137365">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560840658341" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1560934137365" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -234,7 +234,8 @@ class Validate extends BaseController
 </blockquote>
 <p>目录：app\validate\User .php 代码如下 ↓<br>
 注意代码格式，不需要创建方法，直接写验证规则和验证返回即可<br>
-用 protected 声明</p>
+用 protected 声明<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mi>u</mi><mi>l</mi><mi>e</mi><mi mathvariant="normal">验</mi><mi mathvariant="normal">证</mi><mi mathvariant="normal">变</mi><mi mathvariant="normal">量</mi><mi mathvariant="normal">，</mi></mrow><annotation encoding="application/x-tex">rule 验证变量，</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord cjk_fallback">验</span><span class="mord cjk_fallback">证</span><span class="mord cjk_fallback">变</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">，</span></span></span></span>message 返回变量</p>
 <pre><code>&lt;?php
 namespace app\validate;
 
@@ -289,11 +290,11 @@ class Index extends BaseController
 </code></pre>
 <h3 id="响应">响应</h3>
 <p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037526">TP6 官方响应输出</a><br>
-除了路由，需要注意的可能就是重定向了<br>
-1.重定向<br>
+除了路由，需要注意的可能就是重定向了</p>
+<p>1.重定向<br>
 参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037528">TP6 官方重定向</a><br>
-只需要调用 redirect(URL) 函数 即可<br>
-上一个官方例子代码↓</p>
+只需要调用 redirect(URL) 助手函数 即可<br>
+上一个官方例子代码，例子将直接跳转到TP 官网↓</p>
 <pre><code>&lt;?php
 namespace app\controller;
 
@@ -305,7 +306,118 @@ class Index
     }
 }
 </code></pre>
-<p>其他使用模式，比如传值、回溯到原网页等操作，请自行看文档学习🤣🤣🤣</p>
+<p>个人例子
+app/index/controller/Index.php 代码↓</p>
+<pre><code>    public function dome($name = 'Cry')
+    {
+        return &quot;hello ,&quot;. $name .&quot;! 这是重定向后的 dome 页面&quot;;
+    }
+
+    public function name()
+    {
+//      直接无传值定向
+//      return redirect(&quot;index/index/dome&quot;);
+        return redirect(&quot;dome&quot;);
+    }
+</code></pre>
+<p>打开后页面显示结果 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560930051407.png" alt=""></p>
+<p>2.重定向传值</p>
+<pre><code>    public function dome($name = 'Cry')
+    {
+        return &quot;hello ,&quot;. $name .&quot;! 这是重定向后的 dome 页面&quot;;
+    }
+
+    public function name()
+    {
+//        直接传值定向
+//        1.直接在上拼接
+//        return redirect(&quot;index/index/dome?name=Snail&quot;);
+//        或者用 TP 分隔符 / 进行传值
+//        return redirect(&quot;index/index/dome/name/Snail&quot;);
+
+//        2.使用 params 助手函数配合
+//        return redirect('dome')-&gt;params(['name'=&gt;'Snail']);
+
+//        3.直接传递数组，推荐
+        return redirect('dome',['name'=&gt;'Snail']);
+    }
+</code></pre>
+<p>访问结果↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1560930782212.png" alt=""><br>
+注意：同命名空间下，可以省略详细路径！</p>
+<p>3.重定向利用 session 闪存数据<br>
+闪存、回源，需要借助 session 实现，TP6默认不开启 session<br>
+开启方法：把 app/middlware.php 下的 session 初始化注释删除即可 ↓</p>
+<pre><code>&lt;?php
+
+return [
+    // 全局请求缓存
+    // 'think\middleware\CheckRequestCache',
+    // 多语言加载
+    // 'think\middleware\LoadLangPack',
+    // Session初始化
+     'think\middleware\SessionInit',
+    // 页面Trace调试
+    // 'think\middleware\TraceDebug',
+];
+</code></pre>
+<p>闪存数据需要借助 with(变量名,变量值) 方法，写入到 session 缓存 代码如下 ↓</p>
+<pre><code>    public function dome()
+    {
+        //利用session 助手函数 调用
+        $name = session('name');
+        return &quot;hello ,&quot;. $name .&quot;! 这是重定向后的 dome 页面&quot;;
+    }
+
+    public function name()
+    {
+        return redirect('dome')-&gt;with(&quot;name&quot;,&quot;Snail&quot;);
+    }
+</code></pre>
+<blockquote>
+<p>注意事项：重定向目标页面如果手动刷新，将会丢失session 传递值。</p>
+</blockquote>
+<p>图一：<img src="https://UserNameZjw.github.io/post-images/1560932232698.png" alt=""><br>
+图二：<img src="https://UserNameZjw.github.io/post-images/1560932251677.png" alt=""></p>
+<p>重定向回源利用 remember() 方法记住重定向来源页</p>
+<pre><code>//重定向指向
+    public function dome()
+    {
+        //利用session 助手函数 调用
+        $name = session('name');
+        return &quot;hello ,&quot;. $name .'! 这是重定向后的 dome 页面&lt;br&gt;&lt;a href=&quot;/index/index/back&quot;&gt;点击回到来源地址&lt;/a&gt;';
+    }
+
+    //访问链接
+    public function name()
+    {
+        // 判断session完成标记是否存在
+        // 主要是用于回源完成后执行
+        if (session('?back')) {
+            // 删除session
+            session('back', null);
+            return '重定向完成，回到原点!';
+        } else {
+            //利用 remember 方法记住当前地址。
+            return redirect('dome')-&gt;with(&quot;name&quot;,&quot;Snail&quot;)-&gt;remember();
+        }
+
+    }
+
+    //设置标记中转方法
+    public function back(){
+        //设置判断变量 back
+        session('back',true);
+        //回到原址
+        return redirect()-&gt;restore();
+    }
+</code></pre>
+<p>具体结果图 ↓<br>
+图一：<img src="https://UserNameZjw.github.io/post-images/1560933916857.png" alt=""><br>
+图二：<img src="https://UserNameZjw.github.io/post-images/1560933935189.png" alt=""><br>
+图三：<img src="https://UserNameZjw.github.io/post-images/1560933943252.png" alt=""><br>
+需要注意的是图三所描述的场景，刷新重定向 目标页，会丢的不仅仅数据，还有回家的路。</p>
 
             </div>
             
