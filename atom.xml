@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-19T09:11:16.052Z</updated>
+    <updated>2019-06-20T12:33:59.653Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -10,6 +10,182 @@
     <logo>https://UserNameZjw.github.io/images/avatar.png</logo>
     <icon>https://UserNameZjw.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 「谨言慎行」</rights>
+    <entry>
+        <title type="html"><![CDATA[「ThinkPHP 6.0」文件下载类与对象注入]]></title>
+        <id>https://UserNameZjw.github.io/post/thinkphp-6-4</id>
+        <link href="https://UserNameZjw.github.io/post/thinkphp-6-4">
+        </link>
+        <updated>2019-06-20T06:26:14.000Z</updated>
+        <summary type="html"><![CDATA[<p>文件下载<br>
+对象注入</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>文件下载<br>
+对象注入</p>
+<!-- more -->
+<h3 id="tp-文件下载">TP 文件下载</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037529">TP6 官方文件下载文档</a></p>
+<p>1.下载服务器存在文件</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use think\response\File;
+
+class Down
+{
+    public function index(){
+        return &quot;这是下载前置页面，下载方法是 down ，为了有页面展示 所有就有了这个方法。&lt;br&gt;
+                &lt;img src='../../static/image/acg.gy_50.jpg' width='500px'&gt;&lt;hr&gt;
+                &lt;a href='dome'&gt;点击下载壁纸&lt;/a&gt;&lt;br&gt;&quot;;
+    }
+
+    public function dome(){
+        //TP 的下载方法必须 存在实体文件，如果没有将会报错。
+        $file = new File('../public/static/image/acg.gy_50.jpg');
+        //设置下载文件名，自动识别后缀，无需设置。
+        //return $file-&gt;name(&quot;壁纸&quot;);
+        // 使用助手函数和上面的下载文件名是一样的效果
+        //return download('../public/static/image/acg.gy_50.jpg', '壁纸');
+        // 设置300秒有效期
+        return download('../public/static/image/acg.gy_50.jpg', '壁纸')-&gt;expire(300);
+    }
+}
+</code></pre>
+<p>下载前置页面<br>
+<img src="https://UserNameZjw.github.io/post-images/1561014219005.png" alt=""><br>
+点击下载后<br>
+<img src="https://UserNameZjw.github.io/post-images/1561014321900.png" alt=""></p>
+<p>2.下载不存在的文本<br>
+需要申明一下 isContent(true)</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use think\response\File;
+
+class Down
+{
+    public function index(){
+        return &quot;这是下载前置页面，下载方法是 down ，为了有页面展示 所有就有了这个方法。&lt;br&gt;
+                &lt;img src='../../static/image/acg.gy_50.jpg' width='500px'&gt;&lt;hr&gt;
+                &lt;a href='dome'&gt;点击下载壁纸&lt;/a&gt;&lt;br&gt;&quot;;
+    }
+
+    public function dome(){
+        //如果你仅仅是想下载一些写入内容的文档，需要告诉TP 这是可下载文件。
+        $file = new File('这是内容，如果想下载我，需要用到 isContent(true) ');
+        return $file-&gt;name(&quot;测试文档.txt&quot;)-&gt;isContent(true);
+    }
+}
+</code></pre>
+<p>下载结果 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561015047885.png" alt=""></p>
+<h3 id="请求对象的注入与调用">请求对象的注入与调用</h3>
+<p>1.构造方法注入<br>
+是指没有继承 BaseController 基类情况下使用<br>
+如果继承了 BaseController 基类，直接使用同样的调用方法即可，不用再注入</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use think\Request;
+
+class Down
+{
+    protected $request;
+
+    public function __construct(Request $request)
+    {
+        $this-&gt;request = $request;
+    }
+
+    public function index(){
+        //利用 get() 方法 测试是否注入成功
+        //注意，我的服务器因为是 Nginx 所以做了URL 重写，
+        //重写的时候 会把路径也作为GET变量传过来。所以打印值会多一个当前路径
+        dump($this-&gt;request-&gt;get());
+
+        //利用 post() 方法 测试是否注入成功
+        echo &quot;&lt;hr&gt;&quot;;
+        dump($this-&gt;request-&gt;post(['name'=&gt;'Cry']));
+
+    }
+}
+</code></pre>
+<p>2.操作方法注入<br>
+不管有没有继承 BaseController 基类，都可以使用此方式</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use think\Request;
+
+class Down
+{
+
+    public function index(Request $request){
+        //利用 get() 方法 测试是否注入成功
+        //注意，我的服务器因为是 Nginx 所以做了URL 重写，
+        //重写的时候 会把路径也作为GET变量传过来。所以打印值会多一个当前路径
+        dump($request-&gt;get());
+
+        //利用 post() 方法 测试是否注入成功
+        echo &quot;&lt;hr&gt;&quot;;
+        dump($request-&gt;post(['name'=&gt;'Cry']));
+
+    }
+}
+</code></pre>
+<p>3.静态调用<br>
+静态调用是利用TP6 的 facade 机制来静态请求的，use 的时候需要注意路径<br>
+需要<strong>手动</strong> use  think\facade\Request;<br>
+为什么需要注意？因为现阶段的 「编辑软件」 不会自动补全facade 的 use 路径  👻👻👻</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use \think\facade\Request;
+
+class Down
+{
+    public function index(){
+        //利用 get() 方法 测试是否注入成功
+        //注意，我的服务器因为是 Nginx 所以做了URL 重写，
+        //重写的时候 会把路径也作为GET变量传过来。所以打印值会多一个当前路径
+        dump(Request::get());
+
+        //利用 post() 方法 测试是否注入成功
+        echo &quot;&lt;hr&gt;&quot;;
+        dump(Request::post(['name'=&gt;'Cry']));
+    }
+}
+</code></pre>
+<p>4.助手函数<br>
+TP6 一直为用户封装了很多助手函数，基本涵盖了常用的所有需求<br>
+也就是说，TP6不辞辛苦的把每一个人的写法，都尽量兼容😂😂<br>
+无需注入，无需继承 BaseController ，任何额外操作都不需要😂😂
+<strong>但是官方就是不优先推荐</strong> 😂😂😂<br>
+其实里面有的也是 facade</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+class Down
+{
+    public function index(){
+        //利用 get() 方法 测试是否注入成功
+        //注意，我的服务器因为是 Nginx 所以做了URL 重写，
+        //重写的时候 会把路径也作为GET变量传过来。所以打印值会多一个当前路径
+        dump(request()-&gt;get());
+
+        //利用 post() 方法 测试是否注入成功
+        echo &quot;&lt;hr&gt;&quot;;
+        dump(request()-&gt;post(['name'=&gt;'Cry']));
+    }
+}
+</code></pre>
+<h3 id="伪静态">伪静态</h3>
+<p>默认支持 .html 作为后缀</p>
+<blockquote>
+<p>修改方式：app\config\route.php 文件下 'url_html_suffix'       =&gt; 'html' ，如果想关闭，改为 false ，如果不设置，则默认任何后缀都可访问。<br>
+如果想支持多后缀 'url_html_suffix'       =&gt; 'html|xml'</p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[「ThinkPHP 6.0」控制器验证与响应]]></title>
         <id>https://UserNameZjw.github.io/post/thinkphp-6-3</id>
