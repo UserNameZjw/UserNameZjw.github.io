@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-21T15:12:28.718Z</updated>
+    <updated>2019-06-21T15:15:44.534Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -27,7 +27,7 @@
 1.单链接配置
 修改 app\database.php 文件  由于配置项太多，仅拿官方例子展示<br>
 配置上每一项都有注释说明，需要注意的就是文件路径而已🤣🤣</p>
-<pre><code>return [![](https://UserNameZjw.github.io/post-images/1561107233336.png)
+<pre><code>return [
     'default'    =&gt;    'mysql',
     'connections'    =&gt;    [
         'mysql'    =&gt;    [
