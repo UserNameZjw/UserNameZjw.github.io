@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-20T12:34:18.497Z</updated>
+    <updated>2019-06-21T15:10:30.050Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -10,6 +10,246 @@
     <logo>https://UserNameZjw.github.io/images/avatar.png</logo>
     <icon>https://UserNameZjw.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 「谨言慎行」</rights>
+    <entry>
+        <title type="html"><![CDATA[「ThinkPHP 6.0」数据库连接与操作]]></title>
+        <id>https://UserNameZjw.github.io/post/thinkphp-6-5</id>
+        <link href="https://UserNameZjw.github.io/post/thinkphp-6-5">
+        </link>
+        <updated>2019-06-21T07:23:14.000Z</updated>
+        <summary type="html"><![CDATA[<p>数据库链接配置<br>
+数据库操作</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>数据库链接配置<br>
+数据库操作</p>
+<!-- more -->
+<h3 id="连接数据库">连接数据库</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037531">TP6 连接数据库官方文档</a><br>
+1.单链接配置
+修改 app\database.php 文件  由于配置项太多，仅拿官方例子展示<br>
+配置上每一项都有注释说明，需要注意的就是文件路径而已🤣🤣</p>
+<pre><code>return [![](https://UserNameZjw.github.io/post-images/1561107233336.png)
+    'default'    =&gt;    'mysql',
+    'connections'    =&gt;    [
+        'mysql'    =&gt;    [
+            // 数据库类型
+            'type'        =&gt; 'mysql',
+            // 服务器地址
+            'hostname'    =&gt; '127.0.0.1',
+            // 数据库名
+            'database'    =&gt; 'thinkphp',
+            // 数据库用户名
+            'username'    =&gt; 'root',
+            // 数据库密码
+            'password'    =&gt; '',
+            // 数据库连接端口
+            'hostport'    =&gt; '',
+            // 数据库连接参数
+            'params'      =&gt; [],
+            // 数据库编码默认采用utf8
+            'charset'     =&gt; 'utf8',
+            // 数据库表前缀
+            'prefix'      =&gt; 'think_',
+        ],
+    ],
+];
+</code></pre>
+<p>2.多连接配置<br>
+篇幅太长就直接截图说明<br>
+<img src="https://UserNameZjw.github.io/post-images/1561107241843.png" alt=""><br>
+值得一提的是，TP6 引入了 env 环境变量机制，并且环境变量机制优先于 database.php 配置<br>
+关于 evn ，我在之前的 <a href="https://usernamezjw.github.io/post/thinkphp-6-2/">部分配置与控制器</a> 中有说明，找到开启开发调试模式，就能看到。
+.env 代码 ↓</p>
+<pre><code>APP_DEBUG = true
+
+[APP]
+DEFAULT_TIMEZONE = Asia/Shanghai
+
+[DATABASE]
+TYPE = mysql
+HOSTNAME = 127.0.0.1
+DATABASE = tp6
+USERNAME = root
+PASSWORD =
+HOSTPORT = 3306
+CHARSET = utf8
+DEBUG = true
+
+[LANG]
+default_lang = zh-cn
+</code></pre>
+<blockquote>
+<p>注意：.env 文件里的设置，与 database.php 的文件呼应关系如下<br>
+如果是多连接配置<br>
+请保持两个文件内相呼应一致<br>
+即，.env 有几个配置，database.php 就有几个配置<br>
+.env 配置 同理于 database.php ，只需要复制相同部分，然后在 database.php 修改标识部分即可
+<img src="https://UserNameZjw.github.io/post-images/1561122830109.png" alt=""></p>
+</blockquote>
+<p>database.php文件 <img src="https://UserNameZjw.github.io/post-images/1561122441280.png" alt=""><br>
+.env 文件 <img src="https://UserNameZjw.github.io/post-images/1561122448342.png" alt=""></p>
+<p>在数据操作时，可以通过 connect() 方法指定需要使用的数据库连接配置</p>
+<h3 id="数据库操作">数据库操作</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037620">TP6 SQL调试官方文档</a><br>
+另，可以查询 app/vendor/topthink/framework/src/think/db/BaseQuery.php 文件，开启新世界</p>
+<p>1.增<br>
+save() 单条新增，成功返回新增条数<br>
+insert()  单条新增，成功返回新增条数<br>
+insertAll()  多条新增，成功返回新增条数<br>
+insertGetId()  单条新增，成功返回新增数据自增ID<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037534">TP6 添加数据官方文档</a></p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+//        单条数据插入，save() insert() 两种方法等同效果。
+//        使用 save() 新增数据
+//        $data = ['nickname' =&gt; 'save','email' =&gt; '123@snail.com'];
+//        $ins = Db::name('tp')-&gt;save($data);
+
+//        使用insert()新增数据
+//        $data = ['nickname' =&gt; 'insert','email' =&gt; '123@snail.com'];
+//        $ins = Db::name('tp')-&gt;insert($data);
+//
+//        多条数据插入 insertAll()
+//        数据组合为二维数组
+//        $data =
+//            [
+//                ['nickname' =&gt; 'insertAll1','email' =&gt; '123@snail.com'],
+//                ['nickname' =&gt; 'insertAll2','email' =&gt; '123@snail.com']
+//            ];
+        //单条数据插入，但是返回插入数据自增ID。
+        $data = ['nickname' =&gt; 'insertGetId','email' =&gt; '123@snail.com'];
+        $ins = Db::name('tp')-&gt;insertGetId($data);
+
+        if($ins){
+           return &quot;插入成功&quot;;
+        }else{
+            return &quot;插入失败&quot;;
+        }
+    }
+}
+</code></pre>
+<p>结果图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561125241203.png" alt=""></p>
+<p>2.查<br>
+find()  单条查询，成功返回一维数组<br>
+select() 多条查询，成功返回二维数组<br>
+value()  查询某个字段的值，成功返回字符串<br>
+column()  查询某一列的值，成功返回二维数组<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037533">TP6 查询数据官方文档</a></p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+//        查询ID为5的单条数据，返回一维数组
+//        $data = Db::name(&quot;tp&quot;)-&gt;find(&quot;5&quot;);
+
+//        查询数据库内所有数据，返回二维数组
+//        $data = Db::name(&quot;tp&quot;)-&gt;select();
+
+//        查询单条某个字段的值，返回字符串
+//        $data = Db::name(&quot;tp&quot;)-&gt;where(&quot;id&quot;,&quot;5&quot;)-&gt;value(&quot;nickname&quot;);
+
+//        查询多条数据，返回二维数组
+        $data = Db::name(&quot;tp&quot;)-&gt;where(&quot;id&quot;,&quot;&gt;&quot;,&quot;5&quot;)-&gt;column(&quot;*&quot;,&quot;id&quot;);
+        dump($data);
+    }
+}
+</code></pre>
+<p>3.改<br>
+save()  单条修改，成功返回条数<br>
+update()  单/多条修改，成功返回条数<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037535">TP6 更新数据官方文档</a></p>
+<ol>
+<li>save() 使用详解</li>
+</ol>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //配置save() 修改数据，需要指定包含主键 id 才会修改数据，否则将会新增数据
+        $data = [&quot;id&quot;=&gt;&quot;7&quot;,&quot;nickname&quot; =&gt; &quot;saveUp&quot;];
+
+        //打印修改前数据
+        echo &quot;修改前&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(&quot;7&quot;));
+        
+        //修改数据
+        Db::name(&quot;tp&quot;)-&gt;save($data);
+
+        //打印修改后数据
+        echo &quot;修改后&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(&quot;7&quot;));
+    }
+}
+</code></pre>
+<p>图↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561128218256.png" alt=""><br>
+2. update() 详解</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //组合数据形式，分别是update()使用，以及data()使用
+        $updateUp = [&quot;nickname&quot; =&gt; 'updateUp'];
+        $dataUp = [&quot;nickname&quot; =&gt; 'dataUp'];
+
+        //打印修改前数据
+        echo &quot;打印修改前数据&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(7));
+
+        //使用data()传值方式修改
+        Db::name(&quot;tp&quot;)-&gt;where(&quot;id&quot;,&quot;7&quot;)-&gt;data($dataUp)-&gt;update();
+
+        //打印data()传值修改后数据
+        echo &quot;打印data()传值修改后数据&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(7));
+
+        //同时使用data() 和 update()传值方式，update() 法优先级于 data() 传值
+        Db::name(&quot;tp&quot;)-&gt;where(&quot;id&quot;,&quot;7&quot;)-&gt;data($dataUp)-&gt;update($updateUp);
+
+        //打印update()传值修改后数据
+        echo &quot;打印update()传值修改后数据,如果update()不优先级，数据应该无变化&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(7));
+    }
+}
+</code></pre>
+<p>图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561129037853.png" alt=""></p>
+<p>4.删<br>
+delete()  影响数据的条数，没有删除返回 0<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037536">TP6 删除数据官方文档</a></p>
+<blockquote>
+<p>注意：慎用。不存在删库跑路说法<br>
+代码就免了🤣🤣🤣<br>
+一切数据均有其存在的价值</p>
+</blockquote>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[「ThinkPHP 6.0」文件下载类与对象注入]]></title>
         <id>https://UserNameZjw.github.io/post/thinkphp-6-4</id>
