@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1561130142843">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1561184643557">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1561130142843" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1561184643557" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -257,6 +257,8 @@ class Index extends BaseController
 <p>3.改<br>
 save()  单条修改，成功返回条数<br>
 update()  单/多条修改，成功返回条数<br>
+inc() 自增<br>
+dec()  自减<br>
 参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037535">TP6 更新数据官方文档</a></p>
 <ol>
 <li>save() 使用详解</li>
@@ -326,6 +328,37 @@ class Index extends BaseController
 </code></pre>
 <p>图 ↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1561129037853.png" alt=""></p>
+<ol start="3">
+<li>inc() dec() 详解</li>
+</ol>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        echo &quot;将id为1的email自增一次 +2&lt;br&gt;&quot;;
+        echo &quot;自增前&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(1));
+        Db::name(&quot;tp&quot;)-&gt;where(&quot;id&quot;,&quot;1&quot;)-&gt;inc(&quot;email&quot;,2)-&gt;update();
+        echo &quot;自增后&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(1));
+
+
+        echo &quot;将id为1的email自减一次 -1&lt;br&gt;&quot;;
+        Db::name(&quot;tp&quot;)-&gt;where(&quot;id&quot;,&quot;1&quot;)-&gt;dec(&quot;email&quot;,1)-&gt;update();
+        echo &quot;自减后&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;find(1));
+        
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1561184573189.png" alt=""></p>
 <p>4.删<br>
 delete()  影响数据的条数，没有删除返回 0<br>
 参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037536">TP6 删除数据官方文档</a></p>
