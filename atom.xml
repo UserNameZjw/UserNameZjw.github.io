@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-22T06:25:35.293Z</updated>
+    <updated>2019-06-23T01:54:26.081Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -281,6 +281,31 @@ delete()  影响数据的条数，没有删除返回 0<br>
 代码就免了🤣🤣🤣<br>
 一切数据均有其存在的价值</p>
 </blockquote>
+<p>5.调试<br>
+fetchSql() 直接返回当前查询构造器组合语句，需与select() 配合使用<br>
+buildSql()  把当前查询构造器组合语句作为子查询返回，两边带有 <strong>(</strong> 查询语句 <strong>)</strong> ，不需要配合select()<br>
+这两种方法，均不会执行SQL语句</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $where = [
+            [&quot;nickname&quot;,&quot;=&quot;,&quot;Snail&quot;],
+            [&quot;nickname&quot;,&quot;=&quot;,&quot;Cry&quot;]
+        ];
+        dump(Db::name(&quot;tp&quot;)-&gt;whereOr($where)-&gt;buildSql());
+        dump(Db::name(&quot;tp&quot;)-&gt;whereOr($where)-&gt;fetchSql()-&gt;select());
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1561254467131.png" alt=""></p>
 ]]></content>
     </entry>
     <entry>

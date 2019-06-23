@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1561184643557">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1561254501262">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1561184643557" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1561254501262" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -367,6 +367,31 @@ delete()  影响数据的条数，没有删除返回 0<br>
 代码就免了🤣🤣🤣<br>
 一切数据均有其存在的价值</p>
 </blockquote>
+<p>5.调试<br>
+fetchSql() 直接返回当前查询构造器组合语句，需与select() 配合使用<br>
+buildSql()  把当前查询构造器组合语句作为子查询返回，两边带有 <strong>(</strong> 查询语句 <strong>)</strong> ，不需要配合select()<br>
+这两种方法，均不会执行SQL语句</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $where = [
+            [&quot;nickname&quot;,&quot;=&quot;,&quot;Snail&quot;],
+            [&quot;nickname&quot;,&quot;=&quot;,&quot;Cry&quot;]
+        ];
+        dump(Db::name(&quot;tp&quot;)-&gt;whereOr($where)-&gt;buildSql());
+        dump(Db::name(&quot;tp&quot;)-&gt;whereOr($where)-&gt;fetchSql()-&gt;select());
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1561254467131.png" alt=""></p>
 
             </div>
             
