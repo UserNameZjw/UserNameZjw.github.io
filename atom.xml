@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-23T01:56:58.576Z</updated>
+    <updated>2019-06-24T14:30:02.982Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -10,6 +10,417 @@
     <logo>https://UserNameZjw.github.io/images/avatar.png</logo>
     <icon>https://UserNameZjw.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 「谨言慎行」</rights>
+    <entry>
+        <title type="html"><![CDATA[「ThinkPHP 6.0」数据库链式操作]]></title>
+        <id>https://UserNameZjw.github.io/post/thinkphp-6-6</id>
+        <link href="https://UserNameZjw.github.io/post/thinkphp-6-6">
+        </link>
+        <updated>2019-06-23T02:04:17.000Z</updated>
+        <summary type="html"><![CDATA[<p>原生查询  聚合查询<br>
+高级查询  视图查询<br>
+子查询</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>原生查询  聚合查询<br>
+高级查询  视图查询<br>
+子查询</p>
+<!-- more -->
+<h3 id="原生查询">原生查询</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037570">TP6 原生查询官方文档</a><br>
+原生查询可以说是让人又爱又恨<br>
+简单的语句用不到，复杂的语句用TP6 的构造器又更麻烦，导致无法彻底抛弃原生<br>
+query() 可执行任何原生语句<br>
+execute() 仅用于更新以及写入数据，不可做其他用处</p>
+<blockquote>
+<p>因为execute() 在SQL语句无错误的情况下，仅返回受影响条数，否则返回false</p>
+</blockquote>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //下面用原生查询 think_tp 表中的所有数据
+        $sql = &quot; SELECT * FROM think_tp &quot;;
+        dump(Db::query($sql));
+
+        //用execute() 执行查询语句
+        dump(Db::execute($sql));
+    }
+}
+</code></pre>
+<p>图↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561256581994.png" alt=""></p>
+<h3 id="聚合查询">聚合查询</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037564">TP6 聚合查询官方文档</a><br>
+在查询中，经常用到一些需要统计数据<br>
+count()	统计数量，参数是要统计的字段名（可选）<br>
+max()	获取最大值，参数是要统计的字段名（必须）<br>
+min()	获取最小值，参数是要统计的字段名（必须）<br>
+avg()	获取平均值，参数是要统计的字段名（必须）<br>
+sum()	获取总和，参数是要统计的字段名（必须）</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //查询 think_tp 表数据总条数
+        echo &quot;count() 查询总条数&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;count());
+
+        echo &quot;查询 age 最大值&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;max(&quot;age&quot;));
+
+        echo &quot;查询 age 最小值&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;min(&quot;age&quot;));
+
+        echo &quot;查询 age 平均值&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;avg(&quot;age&quot;));
+
+        echo &quot;查询 age 总和&quot;;
+        dump(Db::name(&quot;tp&quot;)-&gt;sum(&quot;age&quot;));
+    }
+}
+</code></pre>
+<p>图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561257598179.jpg" alt=""></p>
+<blockquote>
+<p>注意：max() min() 支持第二个参数，是否开启强制转换，因为有时候，查询的字段并不都是数值<br>
+第二值默认为 true ，可传入 false 关闭强制转换</p>
+</blockquote>
+<h3 id="高级查询">高级查询</h3>
+<p>参考链接：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037566">TP6 高级查询官方文档</a></p>
+<p>1.快捷查询<br>
+快捷查询方式是一种多字段相同查询条件的简化写法<br>
+| 代表 or ，&amp; 代表 and</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //快捷查询 | 代表or ，&amp; 代表 and
+        $back = Db::name(&quot;tp&quot;)
+            -&gt;where(&quot;id|email&quot;,&quot;like&quot;,&quot;12%&quot;)
+            -&gt;where(&quot;id&amp;age&quot;,&quot;&gt;&quot;,&quot;9&quot;)
+            -&gt;select();
+
+        echo Db::name(&quot;tp&quot;)
+            -&gt;where(&quot;id|emali&quot;,&quot;like&quot;,&quot;12%&quot;)
+            -&gt;where(&quot;id&amp;age&quot;,&quot;&gt;&quot;,&quot;9&quot;)
+            -&gt;fetchSql()
+            -&gt;select();
+
+        dump($back);
+
+    }
+}
+</code></pre>
+<p>图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561359487306.jpg" alt=""></p>
+<p>2.批量（字段）查询</p>
+<p>基础用法</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $back = Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;email&quot;,&quot;like&quot;,&quot;123%&quot;],
+                [&quot;id&quot;,&quot;&gt;&quot;,&quot;4&quot;]
+            ])
+            -&gt;select();
+
+        echo Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;email&quot;,&quot;like&quot;,&quot;123%&quot;],
+                [&quot;id&quot;,&quot;&gt;&quot;,&quot;4&quot;]
+            ])
+            -&gt;fetchSql()
+            -&gt;select();
+
+        dump($back);
+
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1561360542975.jpg" alt=""></p>
+<p>exp BUG疑问<br>
+此BUG（暂做BUG看）告诉我们，字段与字段比对，必须exp<br>
+whereExp()</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $back = Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;email&quot;,&quot;like&quot;,&quot;123%&quot;],
+                [&quot;id&quot;,&quot;&gt;&quot;,&quot;age&quot;]
+            ])
+            -&gt;select();
+        echo Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;email&quot;,&quot;like&quot;,&quot;123%&quot;],
+                [&quot;id&quot;,&quot;&gt;&quot;,&quot;age&quot;]
+            ])
+            -&gt;fetchSql()
+            -&gt;select();
+        
+        $back2 = Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;email&quot;,&quot;like&quot;,&quot;123%&quot;],
+                [&quot;id&quot;,&quot;exp&quot;,Db::raw(&quot;&gt;age&quot;)]
+            ])
+            -&gt;select();
+        echo &quot;&lt;br&gt;&quot;.Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;email&quot;,&quot;like&quot;,&quot;123%&quot;],
+                [&quot;id&quot;,&quot;exp&quot;,Db::raw(&quot;&gt;age&quot;)]
+            ])
+            -&gt;fetchSql()
+            -&gt;select();
+
+        dump($back);
+        dump($back2);
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1561363274133.jpg" alt=""></p>
+<blockquote>
+<p>注意：exp 必须配合 Db::raw() 使用</p>
+</blockquote>
+<p>3.数组组合方式，直接变量组合</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //数组查询方式，变量直接组合
+        $email = &quot;Sn&quot;;
+        $nick = &quot;s&quot;;
+        $back = Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;nickname&quot;,&quot;like&quot;,$nick.&quot;%&quot;],
+                [&quot;email&quot;,&quot;like&quot;,$email.&quot;%&quot;]
+            ])
+            -&gt;select();
+
+        echo Db::name(&quot;tp&quot;)
+            -&gt;where([
+                [&quot;nickname&quot;,&quot;like&quot;,$nick.&quot;%&quot;],
+                [&quot;email&quot;,&quot;like&quot;,$email.&quot;%&quot;]
+            ])
+            -&gt;fetchSql()
+            -&gt;select();
+        dump($back);
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1561366312794.jpg" alt=""></p>
+<p>4.闭包查询</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //闭包查询
+        $email = &quot;Sn&quot;;
+        $nick = &quot;s&quot;;
+        $back = Db::name(&quot;tp&quot;)
+            -&gt;where(function ($query) use ($email,$nick){
+                $query-&gt;where([
+                        [&quot;nickname&quot;,&quot;like&quot;,$nick.&quot;%&quot;],
+                        [&quot;email&quot;,&quot;like&quot;,$email.&quot;%&quot;]
+                ]);
+            })
+            -&gt;select();
+
+        echo Db::name(&quot;tp&quot;)
+            -&gt;where(function ($query) use ($email,$nick){
+                $query-&gt;where([
+                    [&quot;nickname&quot;,&quot;like&quot;,$nick.&quot;%&quot;],
+                    [&quot;email&quot;,&quot;like&quot;,$email.&quot;%&quot;]
+                ]);
+            })
+            -&gt;fetchSql()
+            -&gt;select();
+        dump($back);
+    }
+}
+</code></pre>
+<p>图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561367263604.jpg" alt=""></p>
+<p>5.混合查询<br>
+只要符合语法规则的写法，都能同时一起写</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //混合查询
+        $email = &quot;Sn&quot;;
+        $nick = &quot;s&quot;;
+        $back = Db::name(&quot;tp&quot;)
+            //变量组合写法
+            -&gt;where(&quot;nickname&quot;,&quot;like&quot;,$nick.&quot;%&quot;)
+            //闭包写法
+            -&gt;where(function ($query) use ($email){
+                $query-&gt;where([
+                    [&quot;email&quot;,&quot;like&quot;,$email.&quot;%&quot;]
+                ])
+                //字符串写法
+                -&gt;whereOr(&quot;age &gt; 0 and 1=1&quot;);
+            })
+            //快捷写法
+            -&gt;where(&quot;id|age&quot;,&quot;&gt;&quot;,0)
+            //字符串条件查询，绑定写法
+            -&gt;whereRaw(&quot;email like :email&quot;,[&quot;email&quot; =&gt; $email.&quot;%&quot;])
+            -&gt;select();
+
+        echo Db::name(&quot;tp&quot;)
+            -&gt;where(&quot;nickname&quot;,&quot;like&quot;,$nick.&quot;%&quot;)
+            -&gt;where(function ($query) use ($email){
+                $query-&gt;where([
+                    [&quot;email&quot;,&quot;like&quot;,$email.&quot;%&quot;]
+                ])
+                    -&gt;whereOr(&quot;age &gt; 0 and 1=1&quot;);
+            })
+            -&gt;where(&quot;id|age&quot;,&quot;&gt;&quot;,0)
+            -&gt;whereRaw(&quot;email like :email&quot;,[&quot;email&quot; =&gt; $email.&quot;%&quot;])
+            -&gt;fetchSql()
+            -&gt;select();
+        dump($back);
+    }
+}
+</code></pre>
+<p>图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561379697950.jpg" alt=""></p>
+<p>6.更多快捷方法<br>
+<img src="https://UserNameZjw.github.io/post-images/1561379891833.jpg" alt=""></p>
+<h3 id="视图查询">视图查询</h3>
+<p>多表查询，join 的推荐替代方法</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $back = Db::view(&quot;tp a&quot;,&quot;id,nickname&quot;)
+            -&gt;view(&quot;tp1 b&quot;,&quot;id,email,nickname&quot;,&quot;a.id = b.id&quot;,&quot;LEFT&quot;)
+            -&gt;where(&quot;a.id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
+            -&gt;select();
+
+        echo Db::view(&quot;tp a&quot;,&quot;id,nickname&quot;)
+            -&gt;view(&quot;tp1 b&quot;,&quot;id,email,nickname&quot;,&quot;a.id = b.id&quot;,&quot;LEFT&quot;)
+            -&gt;where(&quot;a.id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
+            -&gt;fetchSql()
+            -&gt;select();
+
+        dump($back);
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1561382496575.jpg" alt=""></p>
+<blockquote>
+<p>注意：如果使用数组形式设置别名，如果表名有前缀，需要写前缀<br>
+如 think_ 为表前缀，需写成 ['think_tp' =&gt; 'a'] 不然报错</p>
+</blockquote>
+<h3 id="子查询">子查询</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037569">TP6 子查询官方文档</a></p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\facade\Db;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        //其实子查询，就是利用TP 构造器返回 sql 语句 而不执行
+        echo &quot;fetchSql() 可以用在任何sql构造中，不仅限于 select() &quot;;
+        dump(
+            Db::view([&quot;think_tp&quot; =&gt; &quot;a&quot;],&quot;id,nickname&quot;)
+            -&gt;view(&quot;tp1 b&quot;,&quot;id,email,nickname&quot;,&quot;a.id = b.id&quot;,&quot;LEFT&quot;)
+            -&gt;where(&quot;a.id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
+            -&gt;fetchSql()
+            -&gt;select()
+        );
+
+        echo &quot;buildSql() 一般纯用于构造sql 返回，后续不能跟随 select() update() 之类&lt;br&gt;
+                并且可以返回到变量中，作为复用，此方法会把 sql 语句用（）包裹起来&quot;;
+        dump(
+        Db::view([&quot;think_tp&quot; =&gt; &quot;a&quot;],&quot;id,nickname&quot;)
+            -&gt;view(&quot;tp1 b&quot;,&quot;id,email,nickname&quot;,&quot;a.id = b.id&quot;,&quot;LEFT&quot;)
+            -&gt;where(&quot;a.id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
+            -&gt;buildSql()
+        );
+
+        echo &quot;利用闭包特性，会在sql 构造中，把闭包内容用 （）包裹的特性&quot;;
+        dump(
+            Db::name(&quot;tp&quot;)
+            -&gt;where(&quot;id&quot;,&quot;in&quot;,function ($query){
+                $query-&gt;name(&quot;tp1&quot;)
+                -&gt;where(&quot;id&quot;,&quot;&gt;&quot;,5)
+                -&gt;field(&quot;id&quot;);
+            })
+            -&gt;fetchSql()
+            -&gt;select()
+        );
+    }
+}
+</code></pre>
+<p>图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1561384804354.jpg" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[「ThinkPHP 6.0」数据库连接与操作]]></title>
         <id>https://UserNameZjw.github.io/post/thinkphp-6-5</id>
