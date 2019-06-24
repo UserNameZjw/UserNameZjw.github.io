@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-24T14:31:00.784Z</updated>
+    <updated>2019-06-24T14:41:00.794Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -387,32 +387,30 @@ class Index extends BaseController
         //其实子查询，就是利用TP 构造器返回 sql 语句 而不执行
         echo &quot;fetchSql() 可以用在任何sql构造中，不仅限于 select() &quot;;
         dump(
-            Db::view([&quot;think_tp&quot; =&gt; &quot;a&quot;],&quot;id,nickname&quot;)
-            -&gt;view(&quot;tp1 b&quot;,&quot;id,email,nickname&quot;,&quot;a.id = b.id&quot;,&quot;LEFT&quot;)
-            -&gt;where(&quot;a.id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
-            -&gt;fetchSql()
-            -&gt;select()
+            Db::name(&quot;tp&quot;)
+                -&gt;where(&quot;id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
+                -&gt;fetchSql()
+                -&gt;select()
         );
 
         echo &quot;buildSql() 一般纯用于构造sql 返回，后续不能跟随 select() update() 之类&lt;br&gt;
                 并且可以返回到变量中，作为复用，此方法会把 sql 语句用（）包裹起来&quot;;
         dump(
-        Db::view([&quot;think_tp&quot; =&gt; &quot;a&quot;],&quot;id,nickname&quot;)
-            -&gt;view(&quot;tp1 b&quot;,&quot;id,email,nickname&quot;,&quot;a.id = b.id&quot;,&quot;LEFT&quot;)
-            -&gt;where(&quot;a.id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
-            -&gt;buildSql()
+            Db::name(&quot;tp&quot;)
+                -&gt;where(&quot;id&quot;,&quot;&gt;&quot;,&quot;5&quot;)
+                -&gt;buildSql()
         );
 
         echo &quot;利用闭包特性，会在sql 构造中，把闭包内容用 （）包裹的特性&quot;;
         dump(
             Db::name(&quot;tp&quot;)
-            -&gt;where(&quot;id&quot;,&quot;in&quot;,function ($query){
-                $query-&gt;name(&quot;tp1&quot;)
-                -&gt;where(&quot;id&quot;,&quot;&gt;&quot;,5)
-                -&gt;field(&quot;id&quot;);
-            })
-            -&gt;fetchSql()
-            -&gt;select()
+                -&gt;where(&quot;id&quot;,&quot;in&quot;,function ($query){
+                    $query-&gt;name(&quot;tp1&quot;)
+                    -&gt;where(&quot;id&quot;,&quot;&gt;&quot;,5)
+                    -&gt;field(&quot;id&quot;);
+                })
+                -&gt;fetchSql()
+                -&gt;select()
         );
     }
 }
