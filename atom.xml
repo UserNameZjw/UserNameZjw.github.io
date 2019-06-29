@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-29T14:59:30.162Z</updated>
+    <updated>2019-06-29T15:01:29.786Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -289,7 +289,7 @@ class Index extends BaseController
 <li>单条修改，依然推荐静态调用 update() ，多条推荐 saveAll()</li>
 <li>如果修改数据中包含唯一主键，可以不传递条件参数</li>
 <li>条件参数，数组形式 ['id' =&gt; 26]</li>
-<li>筛选修改，第三个参数，数组形式</li>
+<li>筛选修改，第三个参数，数组形式，是允许的字段</li>
 </ol>
 </blockquote>
 <h3 id="查">查</h3>
