@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-06-29T15:01:43.299Z</updated>
+    <updated>2019-06-29T15:09:39.294Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -83,9 +83,9 @@ class Tp extends Model
 <ol>
 <li>save()  单条插入数据，成功返回true</li>
 <li>saveAll() 批量插入数据，成功返回数据集</li>
-<li>静态调用 create() 成功返回对象数据<br>
-save() 基础用法代码</li>
+<li>静态调用 create() 成功返回对象数据</li>
 </ol>
+<p>save() 基础用法代码</p>
 <pre><code>&lt;?php
 namespace app\index\controller;
 
@@ -229,7 +229,7 @@ class Index extends BaseController
 <li>create 第二个参数，数组形式，是允许插入的字段</li>
 </ol>
 </blockquote>
-<p>总结：尽量用 create() 静态方式新增单条数据，批量插入选择 saveAll() ，除了 create() 自定筛选插入方式翻车以外，其他的插入方法，均自动完成筛选。</p>
+<p>总结：尽量用 create() 静态方式新增单条数据，批量插入选择 saveAll() ，所有插入方法，均自动完成筛选。</p>
 <h3 id="改">改</h3>
 <p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037583">TP6 模型-&gt; 更新 官方文档</a></p>
 <ol>
@@ -373,7 +373,7 @@ class Index extends BaseController
 <h3 id="删">删</h3>
 <p>delete() 成功返回 true/false<br>
 静态调用 destroy()<br>
-闭包删除</p>
+闭包条件删除</p>
 <pre><code>&lt;?php
 namespace app\index\controller;
 
@@ -393,7 +393,7 @@ class Index extends BaseController
         $del = Tp::destroy([26,27]);
         echo $del;
 
-        //闭包删除
+        //闭包条件删除
         echo Tp::destroy(function ($query){
             $query-&gt;where(&quot;id&quot;,&quot;&gt;&quot;,&quot;20&quot;);
         });
