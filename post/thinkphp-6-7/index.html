@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1561819165521">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1561820212877">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1561819165521" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1561820212877" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -313,7 +313,7 @@ class Index extends BaseController
 <ol>
 <li>关于自动筛选以及自动插入，都会有个操作时间，可以在 config/database/php 设置</li>
 <li>默认配置 'auto_timestamp'  =&gt; true 意思是自动完成。如果需要特别指定，可以按照注释配置</li>
-<li>create 第二个参数，数组形式</li>
+<li>create 第二个参数，数组形式，是允许插入的字段</li>
 </ol>
 </blockquote>
 <p>总结：尽量用 create() 静态方式新增单条数据，批量插入选择 saveAll() ，除了 create() 自定筛选插入方式翻车以外，其他的插入方法，均自动完成筛选。</p>
