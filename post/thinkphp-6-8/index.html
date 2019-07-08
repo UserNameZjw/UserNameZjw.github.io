@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>「ThinkPHP 6.0」路由基础使用 | 「谨言慎行」</title>
+<meta name="description" content="一位年近三十的中年油腻肥胖老男人的中年危机">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1562563144703">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://UserNameZjw.github.io">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1562563144703" class="site-logo">
+        <h1 class="site-title">「谨言慎行」</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      一位年近三十的中年油腻肥胖老男人的中年危机
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://UserNameZjw.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">「ThinkPHP 6.0」路由基础使用</h2>
+            <div class="post-date">2019-07-06</div>
+            
+              <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/thinkphp-6-8.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>路由基础定义<br>
+静态路由<br>
+动态路由</p>
+<!-- more -->
+<h3 id="前言本篇例子均在多应用模式执行">前言：本篇例子，均在多应用模式执行</h3>
+<h3 id="路由须知">路由须知</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037494">TP6 路由介绍官方文档</a></p>
+<p>须知一:</p>
+<blockquote>
+<p>TP6 会自动加载 route 目录下所有的文件，把所有的路由规则都写在一个文件里，和写在多个文件里，本质上是一样的。<br>
+区分多个文件来写，仅为了维护更方便。</p>
+</blockquote>
+<p>须知二:</p>
+<blockquote>
+<p>由于 TP6 默认单应用模式<br>
+所以 TP6 的「单应用」模式与「多应用」模式的路由目录架构不完全一样
+<img src="https://UserNameZjw.github.io/post-images/1562395791000.jpg" alt=""></p>
+</blockquote>
+<p>须知三:</p>
+<blockquote>
+<p>每个单独应用，都可以进行单独的路由配置<br>
+只需要在应用目录下创建 /config/route.php 文件进行路由配置<br>
+在单应用关闭路由功能，只需要在 /congif/app.php 设置 'with_route'    =&gt;    false<br>
+index应用下，目录结构 ↓
+<img src="https://UserNameZjw.github.io/post-images/1562397139681.jpg" alt=""><br>
+一般情况下，基本不需要</p>
+</blockquote>
+<h3 id="路由定义">路由定义</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037495">TP6 路由定义 官方文档</a></p>
+<p>文件路径(多应用模式)<br>
+<img src="https://UserNameZjw.github.io/post-images/1562398229469.jpg" alt=""></p>
+<p>1.基础使用<br>
+index.php 代码 ↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+
+class Index extends BaseController
+{
+    public function snail($name = &quot;Cry&quot;,$username = &quot;路由测试&quot;){
+        return &quot;棒棒哒~~&quot;.$name.&quot;恭喜你,&quot;.$username.&quot;,跳转成功&quot;;
+    }
+}
+</code></pre>
+<p>路由定义代码 ↓</p>
+<pre><code>&lt;?php
+use think\facade\Route;
+
+//基础设置，get 访问
+Route::rule(&quot;snail1&quot;,&quot;index/index/snail&quot;,&quot;get&quot;);
+</code></pre>
+<p>2.路由动态传值
+动态传值代码 ↓</p>
+<pre><code>&lt;?php
+use think\facade\Route;
+
+//基础设置，动态传参
+//两种方法等同
+Route::rule(&quot;snail1/:name/:username&quot;,&quot;index/index/snail&quot;,&quot;get&quot;);
+
+Route::rule(&quot;snail1/&lt;name&gt;/&lt;username&gt;&quot;,&quot;index/index/snail&quot;,&quot;get&quot;);
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1562400693593.jpg" alt=""></p>
+<blockquote>
+<ol>
+<li>路由动态传参，路由会自动对应绑定传值，但不可顺序错乱</li>
+<li>路由中定义的 /:name/:username 参数，为必传参数，如果缺少，则报错</li>
+</ol>
+</blockquote>
+<p>3.动态传值，可选参数</p>
+<pre><code>&lt;?php
+use think\facade\Route;
+
+//基础设置，动态传参
+//两种方法等同
+Route::rule(&quot;snail1/:name/:username/[:nickname]&quot;,&quot;index/index/snail&quot;,&quot;get&quot;);
+
+Route::rule(&quot;snail1/&lt;name&gt;/&lt;username&gt;/&lt;nickname?&gt;&quot;,&quot;index/index/snail&quot;,&quot;get&quot;);
+</code></pre>
+<blockquote>
+<p>在不传 nickname 变量情况下，也不会报错</p>
+</blockquote>
+<p>4.路由参数<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037499">TP6 路由参数 官方文档</a></p>
+<ol>
+<li>调用方法名设置</li>
+</ol>
+<pre><code>&lt;?php
+use think\facade\Route;
+
+//仅允许 html 与 shtml 后缀访问
+Route::rule(&quot;snail1/:name/:username/[:nickname]&quot;,&quot;index/index/snail&quot;,&quot;get&quot;)-&gt;ext(&quot;html|shtml&quot;);
+
+//禁止掉无后缀访问
+Route::rule(&quot;snail1/&lt;name&gt;/&lt;username&gt;/&lt;nickname?&gt;&quot;,&quot;index/index/snail&quot;,&quot;get&quot;)-&gt;denyExt(&quot;&quot;);
+</code></pre>
+<ol start="2">
+<li>option 批量设置</li>
+</ol>
+<pre><code>&lt;?php
+use think\facade\Route;
+
+Route::rule(&quot;snail1/&lt;name&gt;/&lt;username&gt;/&lt;nickname?&gt;&quot;,&quot;index/index/snail&quot;,&quot;get&quot;)
+    -&gt;option([
+        //禁止空后缀
+        &quot;deny_ext&quot; =&gt; &quot;&quot;,
+        //仅允许 html 与 shtml 后缀
+        &quot;ext&quot; =&gt; &quot;html|shtml&quot;,
+        //禁止https 访问
+        &quot;https&quot; =&gt; false,
+        //设置访问域名
+        &quot;domain&quot; =&gt; &quot;127.0.0.1&quot;
+    ]);
+</code></pre>
+<blockquote>
+<p>option() 数组格式数据</p>
+</blockquote>
+<p>5.路由分组<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037500">TP6 路由分组 官方文档</a><br>
+简化路由定义，提高路由匹配效率</p>
+<pre><code>&lt;?php
+use think\facade\Route;
+
+Route::group(&quot;snail1&quot;,function(){
+    Route::rule(&quot;:name&quot;,&quot;index/index/snail&quot;);
+    Route::rule(&quot;:username&quot;,&quot;index/index/snail&quot;);
+})
+    -&gt;ext(&quot;html|shtml&quot;)
+    -&gt;https(false)
+    -&gt;pattern([
+        &quot;name&quot; =&gt; &quot;\d+&quot;,
+        &quot;username&quot; =&gt; &quot;\w+&quot;
+    ])
+    ;
+</code></pre>
+<p>6.注解路由<br>
+参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037502">TP6 注解路由 官方文档</a><br>
+注意：需要进入到项目根目录下然后再执行</p>
+<pre><code>composer require topthink/think-annotation 
+</code></pre>
+<p>注解路由，可以直接在 控制器 文件内写<br>
+注解路由需要 use think\annotation\Route;<br>
+以下是 index.php 文件代码 ↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use think\annotation\Route;
+
+class Index extends BaseController
+{
+    public function index(){
+        return &quot;Index&quot;;
+    }
+
+    /**
+     * @param string $name
+     * @param string $username
+     * @param string $nickname
+     * @return string
+     * @Route(&quot;snail1/:name/:username/[:nickname]&quot;,method=&quot;GET&quot;,https=0,ext=&quot;html|shtml&quot;,deny_ext=&quot;&quot;)
+     */
+
+    public function snail($name = &quot;Cry&quot;,$username = &quot;路由测试&quot;,$nickname = &quot;&quot;){
+        return &quot;棒棒哒~~name=&quot;.$name.&quot;,恭喜你,username=&quot;.$username.&quot;,跳转成功,nickname=&quot;.$nickname;
+    }
+}
+</code></pre>
+<p>图 ↓
+<img src="https://UserNameZjw.github.io/post-images/1562563051363.jpg" alt=""></p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://UserNameZjw.github.io/post/thinkphp-6-7">
+                  <h3 class="post-title">
+                    「ThinkPHP 6.0」模型 增、删、改、查
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '19e99227bee7425b84fe',
+        clientSecret: 'fd6e22f86390c0075ff9db20e16c5221d27dbf9f',
+        repo: 'UserNameZjw.github.io',
+        owner: 'UserNameZjw',
+        admin: ['UserNameZjw'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
