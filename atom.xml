@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-07-17T03:42:36.449Z</updated>
+    <updated>2019-07-17T03:55:24.884Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -126,7 +126,7 @@ volist 模板使用 &lt;br&gt;
     {/volist}&lt;br&gt;
 {/literal}
 &lt;br&gt;
-foreach 的 key 从 1 起始 &lt;br&gt;
+volist 的 key 从 1 起始 &lt;br&gt;
 {volist name='list' id='vo' k='i' }
     {$i} &gt;&gt; {$vo.name}&lt;br&gt;
 {/volist}
@@ -145,7 +145,7 @@ foreach 的 key 从 1 起始 &lt;br&gt;
 &lt;/html&gt;
 </code></pre>
 <p>输出图 ↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1563334663093.jpg" alt=""></p>
+<img src="https://UserNameZjw.github.io/post-images/1563335694394.jpg" alt=""></p>
 <h3 id="内置标签">内置标签</h3>
 <p>参考资料 ：<a href="https://www.kancloud.cn/manual/thinkphp5_1/354083">TP5.1 内置标签 官方文档</a><br>
 自由扩展😂😂😂</p>
