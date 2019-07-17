@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1562564042716">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1563334666819">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
@@ -36,7 +36,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://UserNameZjw.github.io">
-        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1562564042716" class="site-logo">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1563334666819" class="site-logo">
         <h1 class="site-title">「谨言慎行」</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -120,7 +120,7 @@
 <p>须知二:</p>
 <blockquote>
 <p>由于 TP6 默认单应用模式<br>
-所以 TP6 的「单应用」模式与「多应用」模式的路由目录架构不完全一样
+所以 TP6 的「单应用」模式与「多应用」模式的路由目录架构不完全一样<br>
 <img src="https://UserNameZjw.github.io/post-images/1562395791000.jpg" alt=""></p>
 </blockquote>
 <p>须知三:</p>
@@ -128,7 +128,7 @@
 <p>每个单独应用，都可以进行单独的路由配置<br>
 只需要在应用目录下创建 /config/route.php 文件进行路由配置<br>
 在单应用关闭路由功能，只需要在 /congif/app.php 设置 'with_route'    =&gt;    false<br>
-index应用下，目录结构 ↓
+index应用下，目录结构 ↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1562397139681.jpg" alt=""><br>
 一般情况下，基本不需要</p>
 </blockquote>
@@ -157,7 +157,7 @@ use think\facade\Route;
 //基础设置，get 访问
 Route::rule(&quot;snail1&quot;,&quot;index/index/snail&quot;,&quot;get&quot;);
 </code></pre>
-<p>2.路由动态传值
+<p>2.路由动态传值<br>
 动态传值代码 ↓</p>
 <pre><code>&lt;?php
 use think\facade\Route;
@@ -168,7 +168,7 @@ Route::rule(&quot;snail1/:name/:username&quot;,&quot;index/index/snail&quot;,&qu
 
 Route::rule(&quot;snail1/&lt;name&gt;/&lt;username&gt;&quot;,&quot;index/index/snail&quot;,&quot;get&quot;);
 </code></pre>
-<p>图 ↓
+<p>图 ↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1562400693593.jpg" alt=""></p>
 <blockquote>
 <ol>
@@ -275,7 +275,7 @@ class Index extends BaseController
     }
 }
 </code></pre>
-<p>图 ↓
+<p>图 ↓<br>
 <img src="https://UserNameZjw.github.io/post-images/1562563051363.jpg" alt=""></p>
 
             </div>

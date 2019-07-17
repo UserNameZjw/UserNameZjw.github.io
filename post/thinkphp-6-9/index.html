@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>「ThinkPHP 6.0」模板使用 | 「谨言慎行」</title>
+<meta name="description" content="一位年近三十的中年油腻肥胖老男人的中年危机">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://UserNameZjw.github.io/favicon.ico?v=1563334666819">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://UserNameZjw.github.io">
+        <img src="https://UserNameZjw.github.io/images/avatar.png?v=1563334666819" class="site-logo">
+        <h1 class="site-title">「谨言慎行」</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      一位年近三十的中年油腻肥胖老男人的中年危机
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://UserNameZjw.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">「ThinkPHP 6.0」模板使用</h2>
+            <div class="post-date">2019-07-08</div>
+            
+              <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/thinkphp-6-9.jpg')">
+              </div>
+            
+            <div class="post-content">
+              <p>TP6 模(mu)板基本使用</p>
+<!-- more -->
+<h3 id="前言一">前言一：</h3>
+<p>TP5.1 文档仅做参考，因为 TP6 里，不再支持 $this 的写法</p>
+<pre><code>$this-&gt;assign('name', 'thinkphp');
+return $this-&gt;fetch();
+</code></pre>
+<p>建议改为静态调用 use think\facade\View;  的用法</p>
+<pre><code>&lt;?php
+namespace app\admin\controller;
+
+use app\BaseController;
+use think\facade\View;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        View::assign([
+            'name' =&gt; 'ThinkPHP',
+        ]);
+        return View::fetch();
+    }
+}
+</code></pre>
+<h3 id="前言二">前言二：</h3>
+<p>TP6 最新版 view 架构，已经由应用目录下创建 view 目录，提升到根目录下的 view<br>
+新旧对比图（左「新」| 右「旧」）<br>
+<img src="https://UserNameZjw.github.io/post-images/1563331585741.jpg" alt=""></p>
+<h3 id="正文">正文</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp5_1/354069">TP5.1 官方模板文档</a></p>
+<blockquote>
+<p>因为 TP6 还在开发中，再加上 TP6 支持自定义模板规则，所以暂时到写文为止，还没有模板的详细介绍</p>
+</blockquote>
+<h3 id="模板变量赋值及输出演示">模板变量赋值及输出演示</h3>
+<p>Controller 下 Index.php 的 index() 方法代码 ↓</p>
+<pre><code>&lt;?php
+namespace app\admin\controller;
+
+use app\BaseController;
+use think\facade\View;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        View::assign([
+            //简单赋值
+            'name' =&gt; 'ThinkPHP',
+            //数组赋值
+            'data' =&gt; ['name' =&gt; 'Cry','name2' =&gt; 'Snail'],
+            //二维数组
+            'list' =&gt; [
+                ['name' =&gt; 'Cry'],
+                ['name' =&gt; 'Snail']
+            ]
+        ]);
+        return View::fetch();
+    }
+}
+</code></pre>
+<p>对应的 HTML 模板代码  ↓</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+简单赋值调用
+&lt;!--litera 是用来原样输出的--&gt;
+{literal}
+    模板输出 {$name}
+{/literal}
+&lt;br&gt;
+{$name}
+&lt;hr&gt;
+
+数组赋值调用
+{literal}
+    模板输出 {$data.name}/{$data.name2}
+{/literal}
+&lt;br&gt;
+{$data.name}/{$data.name2}
+&lt;hr&gt;
+
+二维数组循环 两种方式 foreach | volist &lt;br&gt;
+
+foreach 模板使用 &lt;br&gt;
+{literal}
+    {foreach $list as $key=&gt;$vo }&lt;br&gt;
+        {$vo.name}&lt;br&gt;
+    {/foreach}&lt;br&gt;
+{/literal}
+&lt;br&gt;
+foreach 的 key 从 0 起始 &lt;br&gt;
+{foreach $list as $key=&gt;$vo }
+    {$key} &gt;&gt; {$vo.name}&lt;br&gt;
+{/foreach}
+&lt;hr&gt;
+
+volist 模板使用 &lt;br&gt;
+{literal}
+    {volist name='list' id='vo' k='i' }&lt;br&gt;
+        {$vo.name}&lt;br&gt;
+    {/volist}&lt;br&gt;
+{/literal}
+&lt;br&gt;
+foreach 的 key 从 1 起始 &lt;br&gt;
+{volist name='list' id='vo' k='i' }
+    {$i} &gt;&gt; {$vo.name}&lt;br&gt;
+{/volist}
+
+&lt;hr&gt;
+使用函数 {literal} {:函数名} {/literal}&lt;br&gt;
+使用 MD5() 函数加密 $data.name &lt;br&gt;
+如 {literal} {:MD5($data.name)} / {$data.name | md5} {/literal} &lt;br&gt;
+加密后 {:MD5($data.name)} / {$data.name | md5}
+&lt;hr&gt;
+默认值 default &lt;br&gt;
+{literal} {$data.names|default=&quot;没有字符串的时候出现我&quot;} {/literal} &lt;br&gt;
+{$data.names|default=&quot;没有字符串的时候出现我&quot;}
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>输出图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1563334663093.jpg" alt=""></p>
+<h3 id="内置标签">内置标签</h3>
+<p>参考资料 ：<a href="https://www.kancloud.cn/manual/thinkphp5_1/354083">TP5.1 内置标签 官方文档</a><br>
+自由扩展😂😂😂</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://UserNameZjw.github.io/tag/js73X3rii" class="tag">
+                    ThinkPHP
+                  </a>
+                
+                  <a href="https://UserNameZjw.github.io/tag/ot5L6E5ha" class="tag">
+                    ThinkPHP 6.0
+                  </a>
+                
+                  <a href="https://UserNameZjw.github.io/tag/uFYHgUoyG" class="tag">
+                    PHP
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://UserNameZjw.github.io/post/thinkphp-6-8">
+                  <h3 class="post-title">
+                    「ThinkPHP 6.0」路由基础使用
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '19e99227bee7425b84fe',
+        clientSecret: 'fd6e22f86390c0075ff9db20e16c5221d27dbf9f',
+        repo: 'UserNameZjw.github.io',
+        owner: 'UserNameZjw',
+        admin: ['UserNameZjw'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
