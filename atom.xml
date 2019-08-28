@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-07-17T03:55:33.106Z</updated>
+    <updated>2019-08-28T09:40:30.198Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -10,6 +10,127 @@
     <logo>https://UserNameZjw.github.io/images/avatar.png</logo>
     <icon>https://UserNameZjw.github.io/favicon.ico</icon>
     <rights>All rights reserved 2019, 「谨言慎行」</rights>
+    <entry>
+        <title type="html"><![CDATA[「ThinkPHP 6.0」关联模型]]></title>
+        <id>https://UserNameZjw.github.io/post/thinkphp-6-10</id>
+        <link href="https://UserNameZjw.github.io/post/thinkphp-6-10">
+        </link>
+        <updated>2019-07-10T01:23:37.000Z</updated>
+        <summary type="html"><![CDATA[<p>一对一关联<br>
+一对多关联</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>一对一关联<br>
+一对多关联</p>
+<!-- more -->
+<h3 id="前言本文仅介绍最常用的两个关联">前言：本文仅介绍最常用的两个关联。</h3>
+<p>参考资料 ：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037599">TP6 模型关联官方文档</a></p>
+<h3 id="一对一关联">一对一关联</h3>
+<p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037600">TP6 一对一关联官方文档</a></p>
+<ol>
+<li>hasOne() 正向关联，用于主表关联从表。</li>
+<li>belongsTo() 反向关联，用于从表反向关联主表。</li>
+</ol>
+<p>范例：教师表 正向关联 科目表<br>
+hasOne()基础用法<br>
+教师表文件 Teacher.php ↓</p>
+<pre><code>&lt;?php
+
+namespace app\index\model;
+
+use think\Model;
+
+class Teacher extends Model
+{
+    //定义 Teacher 表关联到科目表
+    public function Course()
+    {
+        return $this-&gt;hasOne(Course::class,'tid','tid');
+    }
+}
+</code></pre>
+<p>控制器 Index.php 文件 ↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use app\index\model\Teacher;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $teacher = new Teacher();
+        $data = $teacher-&gt;find(1);
+        //打印输出老师教授科目
+        dump($data-&gt;course-&gt;cname);
+    }
+}
+</code></pre>
+<p>效果图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1566975888151.jpg" alt=""></p>
+<p>范例：科目表 反向关联 教师表<br>
+belongsTo() 基础用法<br>
+科目表文件 Course.php ↓</p>
+<pre><code>&lt;?php
+
+namespace app\index\model;
+
+use think\Model;
+
+class Course extends Model
+{
+    public function Teacher()
+    {
+        return $this-&gt;belongsTo(Teacher::class,'tid','tid');
+    }
+}
+</code></pre>
+<p>控制器 Index.php 文件 ↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use app\index\model\Course;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $course = new Course();
+        $data = $course-&gt;find(1);
+        //打印输出教授科目老师
+        dump($data-&gt;teacher-&gt;tname);
+    }
+}
+</code></pre>
+<p>效果图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1566977263372.jpg" alt=""></p>
+<p>根据关联数据查询<br>
+范例：查询老师 id = 2 的姓名与所教科目<br>
+hasWhere() 基础用法<br>
+控制器 Index.php 文件 ↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use app\index\model\Course;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $course = new Course();
+        //根据关联数据，查询 老师表 id = 2  所教课程 对应的tid,科目名称，和老师的名称
+        $data = Course::hasWhere('teacher',['id' =&gt; '2'],'Course.tid,Course.cname,Teacher.tname')-&gt;select()-&gt;toArray();
+        //打印输出
+        dump($data);
+    }
+}
+</code></pre>
+<p>效果图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1566979340664.jpg" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[「ThinkPHP 6.0」模板使用]]></title>
         <id>https://UserNameZjw.github.io/post/thinkphp-6-9</id>
@@ -2226,101 +2347,6 @@ Mac 链接本地数据库的时候，必须用 127.0.0.1 而不能用 localhost<
 </blockquote>
 <p>我指的是在 config 的连接文件中的访问 指向<br>
 不然会报错...错...错！！！</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[「ThinkPHP 6.0」下载与安装]]></title>
-        <id>https://UserNameZjw.github.io/post/thinkphp-6-1</id>
-        <link href="https://UserNameZjw.github.io/post/thinkphp-6-1">
-        </link>
-        <updated>2019-06-11T03:12:04.000Z</updated>
-        <summary type="html"><![CDATA[<p>本文仅介绍如何安装TP6<br>
-仅记录本人的实际经过<br>
-如有后来者，不保证经验完全可以照搬</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>本文仅介绍如何安装TP6<br>
-仅记录本人的实际经过<br>
-如有后来者，不保证经验完全可以照搬</p>
-<!-- more -->
-<p>闲话不多说，直接进入主题</p>
-<h3 id="资料及参考">资料及参考</h3>
-<p>官方文档：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037479">TP6官方文档「预览版」</a><br>
-本文主要参考官方文档<br>
-第一章[安装]：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037481">第一章链接</a><br>
-安装工具 composer ，关于composer 不多做介绍<br>
-composer 官网(国外) ：<a href="https://getcomposer.org/">composer 官网链接</a><br>
-composer 中国镜像官网：<a href="https://www.phpcomposer.com/">composer 中国镜像官网链接</a></p>
-<blockquote>
-<p>为什么需要中国镜像官网，是因为「中国国情」导致无法访问到国外站点，除非借助梯子<br>
-其实TP6的文档非常详细了，包括关于 composer 的安装、替换镜像源、下载软件都有详细步骤讲解。</p>
-</blockquote>
-<h3 id="实际上手">实际上手</h3>
-<p>虽然官方的说明非常详细，但也根据每个人的电脑环境，以及系统版本等不同因素而受到不同的影响，以下记录本人的上手情况</p>
-<h3 id="上手环境">上手环境!</h3>
-<p>电脑配置图↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1560225219378.png" alt="电脑环境"><br>
-PHP、Mysql、Nginx 集成环境软件：<a href="http://www.xsrvs.com/">MxSrvs 官网</a><br>
-官网截图↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1560225646600.png" alt=""><br>
-一款很OK的环境集成工具，简单，满足需求。<br>
-缺点：对我来说，唯一的不足就是下载实在是太慢。不过如果有梯子，可以通过谷歌云下载，速度还是OK得，我就是本方式下载</p>
-<h3 id="安装-composer">安装 composer</h3>
-<p>这里我是之前就有安装过，所以直接使用就行了。<br>
-可以直接对照着TP6文档一步一步操作。</p>
-<h3 id="安装tp6">安装TP6</h3>
-<p>我在这个安装过程中，耗费了将近半个小时的时间，总结了一下原因</p>
-<ol>
-<li>镜像源替换失败</li>
-<li>人品(后面介绍)</li>
-</ol>
-<p>环境需求：</p>
-<blockquote>
-<p>安装TP6 需要 PHP 版本 &gt;= 7.1.0 。</p>
-</blockquote>
-<p>安装步骤(仅介绍Mac)</p>
-<ol>
-<li>打开终端工具，顺带检查一下 composer 。<br>
-在终端键入 composer 然后回车<br>
-会出现下图 ↓  即代表安装正确并且全局可使用 composer<br>
-<img src="https://UserNameZjw.github.io/post-images/1560226968175.png" alt=""></li>
-<li>安装开发版(因为现在还没有正式版😁😁)<br>
-先找到要安装的文件夹目录，键入 cd 然后文件目录路径，回车。<br>
-我安装的是 /Users/zjw/Documents/web 目录下<br>
-小技巧，如果在Mac 上不知道路径，只要把你的文件夹拖进终端就可。</li>
-</ol>
-<pre><code>cd /Users/zjw/Documents/web 
-</code></pre>
-<p>然后复制TP6文档中的开发版安装代码，回车，就会自动安装了。代码位置下图↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1560227622056.png" alt=""><br>
-代码 ：</p>
-<pre><code>composer create-project topthink/think=6.0.x-dev tp
-</code></pre>
-<p>注意事项：最后的 「tp」 代表你要创建的用来安装TP6 的文件夹名，这个是可以随便更改的，例如我的是要放在 tp6 文件夹下的，所以 只需要把最后的 「tp」改为「tp6」即可。<br>
-由于每个人的网络情况的不同，下载时间也不同，我加上网络以及人品，折腾了半个多小时。<br>
-安装完之后的截图↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1560228060858.jpg" alt=""></p>
-<p>至此，安装完成。<br>
-当然这是正常流程。<br>
-下面来说下我的人品问题。<br>
-为什么归结于人品呢，有人会问，成功就是成功，失败就是失败，肯定是有原因的。<br>
-可是，我说一个现象，如有雷同，请告诉我，吾道不孤。<br>
-正题：<br>
-一切代码，严格按照教程流程来的。刻意把 web 目录下原本创建的 tp6 文件夹删除。<br>
-然而，我竟然有两次跑完代码，显示创建以及下载成功的时候，却仅仅在 web 目录下创建了一个空的 tp6 文件夹，没有任何东西，最后一次的成功，死马当作活马医，删除了一下 composer 的缓存文件，漫长的等待之后，我终于如愿以偿的看到了下图↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1560228518737.jpg" alt=""><br>
-看到上图的操作方法，以我的本地环境为例<br>
-也可以参考官网文档里的方法<br>
-先把本地环境 PHP 版本更换为合适的版本，MxSrvs 提供了 7.2.6 版本，变更后会自动重启。<br>
-<img src="https://UserNameZjw.github.io/post-images/1560229809105.png" alt=""><br>
-接下来把 Nginx 的配置文件 更改一下。<br>
-<img src="https://UserNameZjw.github.io/post-images/1560229920582.png" alt=""><br>
-具体更改位置下图 ↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1560230041802.png" alt=""><br>
-在这两个地方增加上你的目录即可，然后重启一下你的 Nginx 服务器！<br>
-打开浏览器输入 127.0.0.1 或者 localhost 就可以看到 TP 特有的欢迎页了<br>
-TP 都是以 public 文件夹下的 index 为单一入口的，只需要把路径精确到 public 就可以了。</p>
-<p>感谢互联网的开放精神，拯救了我。<br>
-其实，具体是不是缓存的问题，还是网络的问题，我真的深究不来，既然成功了，那就当成缓存问题来处理好了。💀💀💀</p>
 ]]></content>
     </entry>
 </feed>
