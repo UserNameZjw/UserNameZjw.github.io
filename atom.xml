@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://UserNameZjw.github.io</id>
     <title>「谨言慎行」</title>
-    <updated>2019-08-28T09:41:05.041Z</updated>
+    <updated>2019-08-29T05:41:13.033Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://UserNameZjw.github.io"/>
     <link rel="self" href="https://UserNameZjw.github.io/atom.xml"/>
@@ -22,7 +22,7 @@
         <content type="html"><![CDATA[<p>一对一关联<br>
 一对多关联</p>
 <!-- more -->
-<h3 id="前言本文仅介绍最常用的两个关联">前言：本文仅介绍最常用的两个关联。</h3>
+<h3 id="前言本文仅介绍最常用的两个关联一对一关联一对多关联">前言：本文仅介绍最常用的两个关联「一对一关联」「一对多关联」。</h3>
 <p>参考资料 ：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037599">TP6 模型关联官方文档</a></p>
 <h3 id="一对一关联">一对一关联</h3>
 <p>参考资料：<a href="https://www.kancloud.cn/manual/thinkphp6_0/1037600">TP6 一对一关联官方文档</a></p>
@@ -30,7 +30,8 @@
 <li>hasOne() 正向关联，用于主表关联从表。</li>
 <li>belongsTo() 反向关联，用于从表反向关联主表。</li>
 </ol>
-<p>范例：教师表 正向关联 科目表<br>
+<p>关联查询<br>
+范例：教师表 正向关联 科目表<br>
 hasOne()基础用法<br>
 教师表文件 Teacher.php ↓</p>
 <pre><code>&lt;?php
@@ -121,14 +122,73 @@ class Index extends BaseController
     {
         $course = new Course();
         //根据关联数据，查询 老师表 id = 2  所教课程 对应的tid,科目名称，和老师的名称
-        $data = Course::hasWhere('teacher',['id' =&gt; '2'],'Course.tid,Course.cname,Teacher.tname')-&gt;select()-&gt;toArray();
+        $data = $course-&gt;hasWhere('teacher',['id' =&gt; '2'],'course.*,teacher.*')-&gt;select()-&gt;toArray();
+
+        //闭包查询
+        $data1 = $course-&gt;hasWhere('teacher',function ($query){
+            $query-&gt;where([['id','=','2']]);
+        },'course.*,teacher.*')-&gt;select()-&gt;toArray();
         //打印输出
         dump($data);
+        dump($data1);
     }
 }
 </code></pre>
 <p>效果图 ↓<br>
-<img src="https://UserNameZjw.github.io/post-images/1566979340664.jpg" alt=""></p>
+<img src="https://UserNameZjw.github.io/post-images/1567040169011.jpg" alt=""></p>
+<p>一对一关联更新以或保存<br>
+save()  存在就更新，不存在就新增<br>
+更新范例：更新科目表 id = 1 的任课老师为 SnaiL<br>
+控制器 Index.php 文件↓</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use app\index\model\Course;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $course = new Course();
+        $data  = $course-&gt;find(1);
+        echo '更新前&lt;br&gt;';
+        dump($data-&gt;teacher-&gt;tname);
+        $data-&gt;teacher-&gt;save(['tname' =&gt; 'SnaiL']);
+
+        echo '更新后&lt;br&gt;';
+        $data  = $course-&gt;find(1);
+        dump($data-&gt;teacher-&gt;tname);
+    }
+}
+</code></pre>
+<p>效果图↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1567043018401.jpg" alt=""></p>
+<p>新增范例：新增 [物理] 科目，任课老师为 MaMaKa</p>
+<pre><code>&lt;?php
+namespace app\index\controller;
+
+use app\BaseController;
+use app\index\model\Teacher;
+
+class Index extends BaseController
+{
+    public function index()
+    {
+        $teacher = new Teacher();
+        $data = ['tname' =&gt; 'MaMaKa','tid' =&gt; '01'];
+
+        $id = $teacher-&gt;insertGetId($data);
+        $teach = $teacher-&gt;find($id);
+        $teach-&gt;course()-&gt;save(['cname' =&gt; '物理','cid' =&gt; '01']);
+
+        $rs = $teacher-&gt;find($id);
+        dump($rs-&gt;course-&gt;cname);
+    }
+}
+</code></pre>
+<p>效果图 ↓<br>
+<img src="https://UserNameZjw.github.io/post-images/1567057204200.jpg" alt=""></p>
 ]]></content>
     </entry>
     <entry>
