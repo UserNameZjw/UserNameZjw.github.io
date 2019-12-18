@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Talk | 「谨言慎行」</title>
+<title>「MySQL 」5.1 升级 5.7 踩坑笔录 | 「谨言慎行」</title>
 <meta name="description" content="一位年近三十的中年油腻肥胖老男人的中年危机">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://UserNameZjw.github.io/styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -91,81 +97,75 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: Talk</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://UserNameZjw.github.io/post/mysql-updata">
-                  <h2 class="post-title">「MySQL 」5.1 升级 5.7 踩坑笔录</h2>
-                </a>
-                <div class="post-date">
-                  2019-12-18
-                </div>
-                <div class="post-abstract">
-                  <h3 id="前言">前言</h3>
+          <div class="post-detail">
+            <h2 class="post-title">「MySQL 」5.1 升级 5.7 踩坑笔录</h2>
+            <div class="post-date">2019-12-18</div>
+            
+            <div class="post-content">
+              <h3 id="前言">前言</h3>
 <p>网上教程其实挺多的，写本文的初衷是因为遇到了三个小问题<br>
 在现在的教程中没有提到，对于小白来说很不友好</p>
 <p>问题一：MySQL 5.7 datetime 默认值为‘0000-00-00 00:00:00'值无法创建问题解决<br>
 问题二：sql_mode=only_full_group_by 错误<br>
 问题三：could not find driver ,需要 PHP-PDO_MYSQL 扩展</p>
+<!-- more -->
+<p>安装教程步骤我就不再多言，这里推荐一个教程 <a href="https://blog.csdn.net/qq_39626154/article/details/84836173">MySQL 升级教程</a><br>
+只需要按照里面的步骤一步步进行到最后即可。</p>
+<h4 id="问题一mysql-57-datetime-默认值为0000-00-00-000000值无法创建问题解决">问题一：MySQL 5.7 datetime 默认值为‘0000-00-00 00:00:00'值无法创建问题解决</h4>
+<h4 id="问题二sql_modeonly_full_group_by-错误">问题二：sql_mode=only_full_group_by 错误</h4>
+<p>原因：<br>
+这个错误发生在mysql 5.7 版本及以上版本会出现的问题：<br>
+MySQL 5.7版本默认的sql配置是:sql_mode=&quot;ONLY_FULL_GROUP_BY&quot;，这个配置严格执行了&quot;SQL92标准&quot;；<br>
+问题一和问题二合并解决，只需要在 MySQL 的配置文件中 /etc/my.cnf 增加以下代码<br>
+如果 sql_mode 存在则是修改</p>
+<pre><code>sql_mode=STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+</code></pre>
+<p>然后重启 MySQL 服务即可</p>
+<pre><code>service mysqld restart
+</code></pre>
+<h4 id="问题三could-not-find-driver-需要php-pdo_mysql-扩展">问题三：could not find driver ,需要PHP-PDO_MYSQL 扩展</h4>
+<p>原因：因为有的框架是通过 PDO 链接方式<br>
+只需要在服务器运行</p>
+<pre><code>yum install php-pdo_mysql
+</code></pre>
+<p>然后重启 Apache 服务即可</p>
+<pre><code>service httpd restart
+</code></pre>
 
-                </div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://UserNameZjw.github.io/tag/yWvf_nyYV" class="tag">
+                    MySQL
+                  </a>
+                
+                  <a href="https://UserNameZjw.github.io/tag/1kL1IMeej" class="tag">
+                    Talk
+                  </a>
+                
               </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://UserNameZjw.github.io/post/Talk-01">
-                  <h2 class="post-title">「坚持」是最难的</h2>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://UserNameZjw.github.io/post/mac-Alfred">
+                  <h3 class="post-title">
+                    「Mac」升级 macOS Catalina 后，Alfred 出现的双目录以及无法搜索系统自带软件问题
+                  </h3>
                 </a>
-                <div class="post-date">
-                  2019-08-30
-                </div>
-                <div class="post-abstract">
-                  <p>突然发现<br>
-坚持真的很难<br>
-更难的是不坚持<br>
-而是不坚持还自以为是</p>
-
-                </div>
               </div>
-              
-                <a class="right" href="https://UserNameZjw.github.io/post/Talk-01">
-                  <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/Talk-01.jpg')">
-                  </div>
-                </a>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://UserNameZjw.github.io/post/Mac-error">
-                  <h2 class="post-title">【失误】Mac 上关于链接本地MySQL数据库的报错2002</h2>
-                </a>
-                <div class="post-date">
-                  2019-06-11
-                </div>
-                <div class="post-abstract">
-                  <p>以此为戒<br>
-绝不再犯<br>
-再犯...我也不能咋地自己不是  😂😂😂</p>
+            
 
-                </div>
-              </div>
+            
               
-                <a class="right" href="https://UserNameZjw.github.io/post/Mac-error">
-                  <div class="feature-container" style="background-image: url('https://UserNameZjw.github.io/post-images/Mac-error.jpeg')">
-                  </div>
-                </a>
+                <div id="gitalk-container" data-aos="fade-in"></div>
               
-            </article>
-          
 
-          <div class="pagination-container">
-  
-  
-</div>
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -187,6 +187,29 @@ var app = new Vue({
 })
 
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '19e99227bee7425b84fe',
+        clientSecret: 'fd6e22f86390c0075ff9db20e16c5221d27dbf9f',
+        repo: 'UserNameZjw.github.io',
+        owner: 'UserNameZjw',
+        admin: ['UserNameZjw'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
